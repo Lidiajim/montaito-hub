@@ -155,11 +155,8 @@
 
                 </div>
 
-                <div class="rating-container"><link rel="stylesheet" href="{{ url_for('static', filename='css/stars.css') }}">
-                    <!-- Botón para enviar calificación -->
-                    <button class="btn btn-primary" id="rate-btn">Rate Dataset</button>
-                    
-                    <!-- Mostrar las estrellas a la derecha del botón -->
+                <div class="rating-container" id="rating-container" data-dataset-id="{{ dataset.id }}">
+                    <link rel="stylesheet" href="{{ url_for('static', filename='css/stars.css') }}">
                     <div class="star-rating" id="star-rating">
                         <span class="star" data-value="1">&#9733;</span>
                         <span class="star" data-value="2">&#9733;</span>
@@ -167,12 +164,10 @@
                         <span class="star" data-value="4">&#9733;</span>
                         <span class="star" data-value="5">&#9733;</span>
                     </div>
+                    <button class="btn btn-primary" id="rate-btn">Rate Dataset</button>
                 </div>
                 
-                <!-- Mostrar la calificación promedio -->
-                <h3>Average Rating: <span id="avg-rating">Loading...</span></h3>
-
-                
+                <h4>Average Rating: <span id="avg-rating">Loading...</span></h4>                
 
             </div>
 
@@ -511,26 +506,22 @@
         });
     }
 
-    // Variables para controlar la calificación seleccionada
-    let selectedRating = 0;
+    // Obtén el datasetId desde el atributo data del contenedor
+const datasetId = document.getElementById('rating-container').getAttribute('data-dataset-id');
+console.log("Dataset ID:", datasetId); 
 
-// Obtener elementos de las estrellas
+let selectedRating = 0;
+
 const stars = document.querySelectorAll('.star');
 const rateBtn = document.getElementById('rate-btn');
 const avgRatingElem = document.getElementById('avg-rating');
 
-// Función para actualizar las estrellas en función de la selección
 function updateStarRating(rating) {
     stars.forEach(star => {
-        if (parseInt(star.getAttribute('data-value')) <= rating) {
-            star.style.color = 'yellow';
-        } else {
-            star.style.color = 'gray';
-        }
+        star.style.color = parseInt(star.getAttribute('data-value')) <= rating ? 'yellow' : 'gray';
     });
 }
 
-// Asignar eventos a las estrellas
 stars.forEach(star => {
     star.addEventListener('click', function () {
         selectedRating = parseInt(star.getAttribute('data-value'));
@@ -538,19 +529,17 @@ stars.forEach(star => {
     });
 });
 
-// Función para enviar la calificación
 rateBtn.addEventListener('click', function () {
     if (selectedRating === 0) {
-        alert('Por favor selecciona una calificación');
+        alert('Please select a rating');
         return;
     }
 
-    // Enviar la calificación al backend
-    fetch(`/dataset/{{ dataset.id }}/rate`, {
+    fetch(`/dataset/${datasetId}/rate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')  // Asumimos que el token se guarda en el localStorage
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify({ rating: selectedRating })
     })
@@ -560,24 +549,35 @@ rateBtn.addEventListener('click', function () {
             alert(data.error);
         } else {
             alert(data.message);
-            // Actualizar la calificación promedio después de enviar la calificación
             updateAverageRating();
         }
+    })
+    .catch(error => {
+        console.error("Error in rating request:", error);
     });
 });
 
-// Función para obtener y mostrar la calificación promedio
 function updateAverageRating() {
-    fetch(`/dataset/{{ dataset.id }}/average_rating`)
+    avgRatingElem.textContent = "Loading...";
+    fetch(`/dataset/${datasetId}/average_rating`)
         .then(response => response.json())
         .then(data => {
-            avgRatingElem.textContent = data.average_rating.toFixed(2);
-        });
+    console.log("Data received", data);  // Verifica el formato de los datos recibidos
+    const avgRating = parseFloat(data.average_rating);  // Convertir a número
+    if (!isNaN(avgRating) && avgRating > 0) {  // Verifica si la conversión fue exitosa
+        avgRatingElem.textContent = avgRating.toFixed(2);
+    } else {
+        avgRatingElem.textContent = "No rate";
+    }
+})
+.catch(error => {
+    console.error("Error retrieving the average:", error);
+    avgRatingElem.textContent = "Error loading";
+});
 }
 
-// Obtener y mostrar la calificación promedio al cargar
 updateAverageRating();
-</script>
+
 </script>
 
 {% endblock %}

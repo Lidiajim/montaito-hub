@@ -7,7 +7,7 @@
 
 /* Estilos para las estrellas */
 .star {
-    font-size: 50px;
+    font-size: 40px;
     cursor: pointer;
     color: gray;
     transition: color 0.3s;

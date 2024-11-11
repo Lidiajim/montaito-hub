@@ -146,14 +146,11 @@ class DataSetService(BaseService):
         if rating < 1 or rating > 5:
             raise ValueError("La calificación debe estar entre 1 y 5")
 
-        # Verificar si el usuario ya ha calificado este dataset
         existing_rating = db.session.query(DatasetRating).filter_by(dataset_id=dataset_id, user_id=user_id).first()
         
         if existing_rating:
-            # Si ya existe la calificación, la actualizamos
             existing_rating.rating = rating
         else:
-            # Si no existe, creamos una nueva calificación
             new_rating = DatasetRating(dataset_id=dataset_id, user_id=user_id, rating=rating)
             db.session.add(new_rating)
         
@@ -162,7 +159,7 @@ class DataSetService(BaseService):
     
     def get_average_rating(self, dataset_id: int) -> float:
         avg_rating = db.session.query(func.avg(DatasetRating.rating)).filter_by(dataset_id=dataset_id).scalar()
-        return avg_rating if avg_rating else 0.0
+        return avg_rating if avg_rating is not None else 0.0  
 
 
 class AuthorService(BaseService):

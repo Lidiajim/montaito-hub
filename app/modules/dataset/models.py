@@ -174,5 +174,4 @@ class DatasetRating(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     rating = db.Column(db.Integer, nullable=False)  
     
-    # Relación con DataSet
     data_set = db.relationship('DataSet', back_populates='ratings')
