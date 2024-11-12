@@ -1,7 +1,6 @@
 name: Codacy CI
 
 on:
-
   push:
     branches:
       - main
@@ -12,9 +11,7 @@ on:
       - develop
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     services:
@@ -59,6 +56,7 @@ jobs:
     - name: Upload coverage to Codacy
       run: |
         pip install codacy-coverage
+        # Ejecuta las pruebas, asegurándote de que la ruta correcta de chromedriver esté configurada
         coverage run -m pytest app/modules/ --ignore-glob='*selenium*'
         coverage xml 
         python-codacy-coverage -r coverage.xml
@@ -70,3 +68,5 @@ jobs:
         MARIADB_USER: uvlhub_user
         MARIADB_PASSWORD: uvlhub_password
         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        # Agrega la variable de entorno para el path de chromedriver
+        CHROMEDRIVER_PATH: "/home/runner/.wdm/drivers/chromedriver/linux64/130.0.6723.116/chromedriver-linux64/chromedriver"
