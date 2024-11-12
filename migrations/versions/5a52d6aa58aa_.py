@@ -1,8 +1,8 @@
-"""first migration
+"""empty message
 
-Revision ID: 001
+Revision ID: 5a52d6aa58aa
 Revises: 
-Create Date: 2024-09-08 16:50:20.326640
+Create Date: 2024-11-12 23:07:43.297955
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '001'
+revision = '5a52d6aa58aa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,10 +44,6 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
-    op.create_table('webhook',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('zenodo',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
@@ -76,6 +72,14 @@ def upgrade():
     sa.Column('uvl_version', sa.String(length=120), nullable=True),
     sa.Column('fm_metrics_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['fm_metrics_id'], ['fm_metrics.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('notepad',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=256), nullable=False),
+    sa.Column('body', sa.Text(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user_profile',
@@ -109,6 +113,15 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('dataset_ratings',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('dataset_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('rating', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['dataset_id'], ['data_set.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('ds_download_record',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -135,6 +148,15 @@ def upgrade():
     sa.Column('fm_meta_data_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['data_set_id'], ['data_set.id'], ),
     sa.ForeignKeyConstraint(['fm_meta_data_id'], ['fm_meta_data.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('feature_model_ratings',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('feature_model_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('rating', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['feature_model_id'], ['feature_model.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('file',
@@ -174,16 +196,18 @@ def downgrade():
     op.drop_table('file_view_record')
     op.drop_table('file_download_record')
     op.drop_table('file')
+    op.drop_table('feature_model_ratings')
     op.drop_table('feature_model')
     op.drop_table('ds_view_record')
     op.drop_table('ds_download_record')
+    op.drop_table('dataset_ratings')
     op.drop_table('data_set')
     op.drop_table('author')
     op.drop_table('user_profile')
+    op.drop_table('notepad')
     op.drop_table('fm_meta_data')
     op.drop_table('ds_meta_data')
     op.drop_table('zenodo')
-    op.drop_table('webhook')
     op.drop_table('user')
     op.drop_table('fm_metrics')
     op.drop_table('ds_metrics')

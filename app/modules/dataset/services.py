@@ -6,9 +6,11 @@ from typing import Optional
 import uuid
 
 from flask import request
+from app import db
+from sqlalchemy import func
 
 from app.modules.auth.services import AuthenticationService
-from app.modules.dataset.models import DSViewRecord, DataSet, DSMetaData
+from app.modules.dataset.models import DSViewRecord, DataSet, DSMetaData, DatasetRating
 from app.modules.dataset.repositories import (
     AuthorRepository,
     DOIMappingRepository,
@@ -139,6 +141,31 @@ class DataSetService(BaseService):
     def get_uvlhub_doi(self, dataset: DataSet) -> str:
         domain = os.getenv('DOMAIN', 'localhost')
         return f'http://{domain}/doi/{dataset.ds_meta_data.dataset_doi}'
+    
+    def rate_dataset(self, dataset_id: int, user_id: int, rating: int) -> DatasetRating:
+        if rating < 1 or rating > 5:
+            raise ValueError("La calificación debe estar entre 1 y 5")
+
+        existing_rating = db.session.query(DatasetRating).filter_by(dataset_id=dataset_id, user_id=user_id).first()
+        
+        if existing_rating:
+            existing_rating.rating = rating
+        else:
+            new_rating = DatasetRating(dataset_id=dataset_id, user_id=user_id, rating=rating)
+            db.session.add(new_rating)
+        
+        db.session.commit()
+        return existing_rating if existing_rating else new_rating
+    
+    def get_average_rating(self, dataset_id: int) -> float:
+        avg_rating = db.session.query(func.avg(DatasetRating.rating)).filter_by(dataset_id=dataset_id).scalar()
+        return avg_rating if avg_rating is not None else 0.0  
+
+    def get_profile(self, dataset):
+        user_profile = dataset.user.profile
+        domain = os.getenv('DOMAIN', 'localhost')
+        return f'http://{domain}/profile/{user_profile.user_id}'
+
 
 
 class AuthorService(BaseService):
