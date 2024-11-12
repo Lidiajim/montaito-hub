@@ -1,1 +1,200 @@
-{"created": "2024-11-06T19:15:58.970480+00:00", "modified": "2024-11-06T19:15:59.259659+00:00", "id": 127564, "conceptrecid": "127563", "doi": "10.5072/zenodo.127564", "conceptdoi": "10.5072/zenodo.127563", "doi_url": "https://doi.org/10.5072/zenodo.127564", "metadata": {"title": "Testing", "doi": "10.5072/zenodo.127564", "publication_date": "2024-11-06", "description": "<p>This is a test.</p>", "access_right": "open", "creators": [{"name": "jun yao", "affiliation": "Universidad de Sevilla"}], "contributors": [{"name": "jun yao", "affiliation": null, "type": "DataCollector"}], "dates": [{"type": "accepted"}], "language": "ili", "custom": {"code:programmingLanguage": [{"id": "python", "title": {"en": "Python"}}], "code:developmentStatus": {"id": "moved", "title": {"en": "Moved"}}}, "license": "cc-by-4.0", "imprint_publisher": "Zenodo", "upload_type": "dataset", "prereserve_doi": {"doi": "10.5281/zenodo.127564", "recid": 127564}}, "title": "Testing", "links": {"self": "https://sandbox.zenodo.org/api/records/127564", "html": "https://sandbox.zenodo.org/records/127564", "doi": "https://doi.org/10.5072/zenodo.127564", "parent_doi": "https://sandbox.zenodo.org/doi/10.5072/zenodo.127563", "badge": "https://sandbox.zenodo.org/badge/doi/10.5072%2Fzenodo.127564.svg", "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072%2Fzenodo.127563.svg", "files": "https://sandbox.zenodo.org/api/records/127564/files", "latest_draft": "https://sandbox.zenodo.org/api/deposit/depositions/127564", "latest_draft_html": "https://sandbox.zenodo.org/deposit/127564", "publish": "https://sandbox.zenodo.org/api/deposit/depositions/127564/actions/publish", "edit": "https://sandbox.zenodo.org/api/deposit/depositions/127564/actions/edit", "discard": "https://sandbox.zenodo.org/api/deposit/depositions/127564/actions/discard", "newversion": "https://sandbox.zenodo.org/api/deposit/depositions/127564/actions/newversion", "registerconceptdoi": "https://sandbox.zenodo.org/api/deposit/depositions/127564/actions/registerconceptdoi", "record": "https://sandbox.zenodo.org/api/records/127564", "record_html": "https://sandbox.zenodo.org/record/127564", "latest": "https://sandbox.zenodo.org/api/records/127564/versions/latest", "latest_html": "https://sandbox.zenodo.org/record/127564/versions/latest"}, "record_id": 127564, "owner": 24035, "files": [{"id": "bc43f432-5e93-41d8-8e42-bd804e759873", "filename": "prueba.txt", "filesize": 5, "checksum": "916f4c31aaa35d6b867dae9a7f54270d", "links": {"self": "https://sandbox.zenodo.org/api/records/127564/files/bc43f432-5e93-41d8-8e42-bd804e759873", "download": "https://sandbox.zenodo.org/api/records/127564/draft/files/prueba.txt/content"}}], "state": "done", "submitted": true}
+{
+  "access": {
+    "embargo": {
+      "active": false,
+      "reason": null
+    },
+    "files": "restricted",
+    "record": "public",
+    "status": "restricted"
+  },
+  "created": "2024-11-12T20:33:29.945089+00:00",
+  "custom_fields": {},
+  "deletion_status": {
+    "is_deleted": false,
+    "status": "P"
+  },
+  "files": {
+    "count": 1,
+    "enabled": true,
+    "entries": {
+      "file1.uvl": {
+        "access": {
+          "hidden": false
+        },
+        "checksum": "md5:c80ca2ca9edec3c8b001e42922229d4c",
+        "ext": "uvl",
+        "id": "b9a8cf2a-c1bd-4f08-9afc-d9029cf6a485",
+        "key": "file1.uvl",
+        "links": {
+          "content": "https://zenodo.org/api/records/14110637/files/file1.uvl/content",
+          "self": "https://zenodo.org/api/records/14110637/files/file1.uvl"
+        },
+        "metadata": {},
+        "mimetype": "application/octet-stream",
+        "size": 414,
+        "storage_class": "L"
+      }
+    },
+    "order": [],
+    "total_bytes": 414
+  },
+  "id": "14110637",
+  "is_draft": false,
+  "is_published": true,
+  "links": {
+    "access": "https://zenodo.org/api/records/14110637/access",
+    "access_grants": "https://zenodo.org/api/records/14110637/access/grants",
+    "access_links": "https://zenodo.org/api/records/14110637/access/links",
+    "access_request": "https://zenodo.org/api/records/14110637/access/request",
+    "access_users": "https://zenodo.org/api/records/14110637/access/users",
+    "archive": "https://zenodo.org/api/records/14110637/files-archive",
+    "archive_media": "https://zenodo.org/api/records/14110637/media-files-archive",
+    "communities": "https://zenodo.org/api/records/14110637/communities",
+    "communities-suggestions": "https://zenodo.org/api/records/14110637/communities-suggestions",
+    "doi": "https://doi.org/10.5281/zenodo.14110637",
+    "draft": "https://zenodo.org/api/records/14110637/draft",
+    "files": "https://zenodo.org/api/records/14110637/files",
+    "latest": "https://zenodo.org/api/records/14110637/versions/latest",
+    "latest_html": "https://zenodo.org/records/14110637/latest",
+    "media_files": "https://zenodo.org/api/records/14110637/media-files",
+    "parent": "https://zenodo.org/api/records/14110636",
+    "parent_doi": "https://doi.org/10.5281/zenodo.14110636",
+    "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.14110636",
+    "parent_html": "https://zenodo.org/records/14110636",
+    "requests": "https://zenodo.org/api/records/14110637/requests",
+    "reserve_doi": "https://zenodo.org/api/records/14110637/draft/pids/doi",
+    "self": "https://zenodo.org/api/records/14110637",
+    "self_doi": "https://doi.org/10.5281/zenodo.14110637",
+    "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.14110637",
+    "self_html": "https://zenodo.org/records/14110637",
+    "self_iiif_manifest": "https://zenodo.org/api/iiif/record:14110637/manifest",
+    "self_iiif_sequence": "https://zenodo.org/api/iiif/record:14110637/sequence/default",
+    "versions": "https://zenodo.org/api/records/14110637/versions"
+  },
+  "media_files": {
+    "count": 0,
+    "enabled": false,
+    "entries": {},
+    "order": [],
+    "total_bytes": 0
+  },
+  "metadata": {
+    "creators": [
+      {
+        "person_or_org": {
+          "family_name": "junyao",
+          "name": "junyao",
+          "type": "personal"
+        }
+      }
+    ],
+    "dates": [
+      {
+        "date": "2024-11-12",
+        "description": "date",
+        "type": {
+          "id": "accepted",
+          "title": {
+            "de": "Angenommen",
+            "en": "Accepted"
+          }
+        }
+      }
+    ],
+    "description": "<p>For testing unit.</p>",
+    "languages": [
+      {
+        "id": "spa",
+        "title": {
+          "en": "Spanish"
+        }
+      }
+    ],
+    "publication_date": "2024-11-12",
+    "publisher": "Zenodo",
+    "resource_type": {
+      "id": "dataset",
+      "title": {
+        "de": "Datensatz",
+        "en": "Dataset"
+      }
+    },
+    "rights": [
+      {
+        "description": {
+          "en": "The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited."
+        },
+        "icon": "cc-by-icon",
+        "id": "cc-by-4.0",
+        "props": {
+          "scheme": "spdx",
+          "url": "https://creativecommons.org/licenses/by/4.0/legalcode"
+        },
+        "title": {
+          "en": "Creative Commons Attribution 4.0 International"
+        }
+      }
+    ],
+    "title": "test_unit"
+  },
+  "parent": {
+    "access": {
+      "grants": [],
+      "links": [],
+      "owned_by": {
+        "user": "1218895"
+      },
+      "settings": {
+        "accept_conditions_text": null,
+        "allow_guest_requests": false,
+        "allow_user_requests": false,
+        "secret_link_expiration": 0
+      }
+    },
+    "communities": {},
+    "id": "14110636",
+    "pids": {
+      "doi": {
+        "client": "datacite",
+        "identifier": "10.5281/zenodo.14110636",
+        "provider": "datacite"
+      }
+    }
+  },
+  "pids": {
+    "doi": {
+      "client": "datacite",
+      "identifier": "10.5281/zenodo.14110637",
+      "provider": "datacite"
+    },
+    "oai": {
+      "identifier": "oai:zenodo.org:14110637",
+      "provider": "oai"
+    }
+  },
+  "revision_id": 4,
+  "stats": {
+    "all_versions": {
+      "data_volume": 0.0,
+      "downloads": 0,
+      "unique_downloads": 0,
+      "unique_views": 0,
+      "views": 0
+    },
+    "this_version": {
+      "data_volume": 0.0,
+      "downloads": 0,
+      "unique_downloads": 0,
+      "unique_views": 0,
+      "views": 0
+    }
+  },
+  "status": "published",
+  "updated": "2024-11-12T20:33:30.113813+00:00",
+  "versions": {
+    "index": 1,
+    "is_latest": true,
+    "is_latest_draft": true
+  }
+}
