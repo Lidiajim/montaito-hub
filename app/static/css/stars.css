@@ -1,0 +1,37 @@
+/* Contenedor para el botón y las estrellas */
+.rating-container {
+    display: flex;               /* Utilizamos flexbox para alinearlos en fila */
+    align-items: center;         /* Alineación vertical centrada */
+    gap: 15px;                   /* Espacio entre el botón y las estrellas */
+}
+
+/* Estilos para las estrellas */
+.star {
+    font-size: 40px;
+    cursor: pointer;
+    color: gray;
+    transition: color 0.3s;
+    margin-right: 10px;  /* Espacio entre las estrellas */
+}
+
+/* Cuando se pasa el mouse por encima de las estrellas */
+.star:hover {
+    color: gold;
+}
+
+/* Estrellas seleccionadas en color dorado */
+.star.selected {
+    color: gold;
+}
+
+/* Estilo para el botón */
+#rate-btn {
+    padding: 10px 20px;  /* Tamaño del botón */
+    font-size: 16px;      /* Tamaño del texto en el botón */
+    cursor: pointer;
+}
+
+/* Espacio entre el botón y el promedio */
+#avg-rating {
+    margin-top: 20px;
+}
