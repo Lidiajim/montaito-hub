@@ -7,7 +7,10 @@ from app.modules.profile.services import UserProfileService
 from app.modules.auth.services import AuthenticationService
 from app.modules.dataset.models import DataSet
 
+
+profile_service = UserProfileService()
 authentication_service = AuthenticationService()
+
 
 @profile_bp.route("/profile/edit", methods=["GET", "POST"])
 @login_required
@@ -52,6 +55,33 @@ def my_profile():
     )
 
 
+@profile_bp.route("/profile/<int:user_id>", methods=["GET"])
+def view_profile(user_id):
+    # Buscar el perfil del usuario por su ID
+    profile = profile_service.get_by_id(user_id)
+
+    # Obtener los datasets del usuario
+    page = request.args.get('page', 1, type=int)
+    per_page = 5
+
+    user_datasets_pagination = db.session.query(DataSet) \
+        .filter(DataSet.user_id == user_id) \
+        .order_by(DataSet.created_at.desc()) \
+        .paginate(page=page, per_page=per_page, error_out=False)
+
+    total_datasets_count = db.session.query(DataSet) \
+        .filter(DataSet.user_id == user_id) \
+        .count()
+
+    return render_template(
+        'profile/profile.html',
+        user_profile=profile,
+        datasets=user_datasets_pagination.items,
+        pagination=user_datasets_pagination,
+        total_datasets=total_datasets_count
+    )
+
+  
 @profile_bp.route('/profile/reset_password_link', methods=['POST'])
 @login_required
 def generate_password_reset_link():
