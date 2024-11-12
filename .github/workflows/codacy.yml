@@ -43,6 +43,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    # Limpia la caché de WebDriver Manager para evitar conflictos con archivos adicionales
+    - name: Clean WebDriver Manager Cache
+      run: |
+        rm -rf /home/runner/.wdm
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
