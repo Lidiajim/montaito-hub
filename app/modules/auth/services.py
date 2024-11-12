@@ -8,7 +8,10 @@ from app.modules.profile.models import UserProfile
 from app.modules.profile.repositories import UserProfileRepository
 from core.configuration.configuration import uploads_folder_name
 from core.services.BaseService import BaseService
-
+import smtplib
+from email.mime.text import MIMEText
+from itsdangerous import URLSafeTimedSerializer
+from flask import current_app
 
 class AuthenticationService(BaseService):
     def __init__(self):
@@ -79,3 +82,34 @@ class AuthenticationService(BaseService):
 
     def temp_folder_by_user(self, user: User) -> str:
         return os.path.join(uploads_folder_name(), "temp", str(user.id))
+    
+    
+    
+    def send_mail(self, subject, body, sender, recipients, password):
+        message = MIMEText(body)
+        message["Subject"] = subject
+        message["From"] = sender
+        message["To"] = ", ".join(recipients)
+        
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp_server:
+            smtp_server.login(sender, password)
+            smtp_server.sendmail(sender, recipients, message.as_string())
+
+    def generate_password_reset_token(self,email):
+        serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+        return serializer.dumps(email, salt='password-reset-salt')
+
+    def verify_password_reset_token(self,token, expiration=3600):  
+        serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+        try:
+            email = serializer.loads(
+                token,
+                salt='password-reset-salt',
+                max_age=expiration
+            )
+        except:
+            return None
+        return email
+    
+    def get_user_by_email(self, email: str) -> User | None:
+        return self.repository.get_by_email(email)

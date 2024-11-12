@@ -161,6 +161,12 @@ class DataSetService(BaseService):
         avg_rating = db.session.query(func.avg(DatasetRating.rating)).filter_by(dataset_id=dataset_id).scalar()
         return avg_rating if avg_rating is not None else 0.0  
 
+    def get_profile(self, dataset):
+        user_profile = dataset.user.profile
+        domain = os.getenv('DOMAIN', 'localhost')
+        return f'http://{domain}/profile/{user_profile.user_id}'
+
+
 
 class AuthorService(BaseService):
     def __init__(self):
