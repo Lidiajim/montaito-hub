@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c4344d7e3b1f
+Revision ID: 5a52d6aa58aa
 Revises: 
-Create Date: 2024-11-12 20:08:12.519091
+Create Date: 2024-11-12 23:07:43.297955
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c4344d7e3b1f'
+revision = '5a52d6aa58aa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -113,6 +113,15 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('dataset_ratings',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('dataset_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('rating', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['dataset_id'], ['data_set.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('ds_download_record',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -139,6 +148,15 @@ def upgrade():
     sa.Column('fm_meta_data_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['data_set_id'], ['data_set.id'], ),
     sa.ForeignKeyConstraint(['fm_meta_data_id'], ['fm_meta_data.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('feature_model_ratings',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('feature_model_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('rating', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['feature_model_id'], ['feature_model.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('file',
@@ -178,9 +196,11 @@ def downgrade():
     op.drop_table('file_view_record')
     op.drop_table('file_download_record')
     op.drop_table('file')
+    op.drop_table('feature_model_ratings')
     op.drop_table('feature_model')
     op.drop_table('ds_view_record')
     op.drop_table('ds_download_record')
+    op.drop_table('dataset_ratings')
     op.drop_table('data_set')
     op.drop_table('author')
     op.drop_table('user_profile')
