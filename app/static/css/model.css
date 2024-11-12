@@ -1,0 +1,39 @@
+/* Container for the rating button and stars */
+.mini-rating-container {
+    display: flex;
+    flex-direction: column;       /* Stack elements vertically */
+    align-items: center;          /* Center-aligns the stars and button */
+    gap: 5px;                     /* Smaller space between stars and button */
+}
+
+/* Styles for the stars */
+.mini-star {
+    font-size: 20px;              /* Smaller star size */
+    cursor: pointer;
+    color: gray;
+    transition: color 0.3s;
+    margin-right: 5px;            /* Space between stars */
+}
+
+/* Hover effect for stars */
+.mini-star:hover {
+    color: gold;
+}
+
+/* Selected stars in gold */
+.mini-star.selected {
+    color: gold;
+}
+
+/* Style for the rating button */
+#mini-rate-btn {
+    padding: 5px 10px;            /* Smaller button size */
+    font-size: 12px;              /* Smaller button text */
+    cursor: pointer;
+    margin-top: 8px;              /* Space above the button */
+}
+
+/* Space for the average rating display */
+#mini-avg-rating {
+    margin-top: 10px;             /* Smaller margin above the rating */
+}

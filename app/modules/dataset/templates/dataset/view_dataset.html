@@ -3,6 +3,7 @@
 {% block title %}View dataset{% endblock %}
 
 {% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/model.css') }}">
 <style>
     .option-button {
         display: block;
@@ -277,7 +278,19 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <!-- Rating container for each UVL model -->
+                                <div class="mini-rating-container" id="rating-container-{{ file.id }}" data-file-id="{{ file.id }}">
+                                    <link rel="stylesheet" href="{{ url_for('static', filename='css/model.css') }}">
+                                    <div class="star-rating" id="star-rating-{{ file.id }}">
+                                        <span class="mini-star" data-value="1">&#9733;</span>
+                                        <span class="mini-star" data-value="2">&#9733;</span>
+                                        <span class="mini-star" data-value="3">&#9733;</span>
+                                        <span class="mini-star" data-value="4">&#9733;</span>
+                                        <span class="mini-star" data-value="5">&#9733;</span>
+                                    </div>
+                                    <button class="btn btn-primary rate-btn" data-file-id="{{ file.id }}" id="mini-rate-btn">Rate Model</button>
+                                    <p>Average Rating: <span id="mini-avg-rating-{{ file.id }}">Loading...</span></p>
+                                </div>                                
                                 
                             </div>
                             <div class="col-12 text-end" >
@@ -577,6 +590,105 @@ function updateAverageRating() {
 }
 
 updateAverageRating();
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.mini-rating-container').forEach(container => {
+        const featureModelId = container.getAttribute('data-file-id');
+        console.log("Feature Model ID:", featureModelId);  // Verifica el ID del modelo
+
+        let selectedRating = 0;
+        const stars = container.querySelectorAll('.mini-star');  // Selecciona solo las estrellas dentro de este contenedor
+        const rateBtn = container.querySelector('.rate-btn');    // Selecciona el botón dentro de este contenedor
+        const avgRatingElem = document.getElementById(`mini-avg-rating-${featureModelId}`);
+
+        if (!avgRatingElem) {
+            console.error(`Elemento con ID mini-avg-rating-${featureModelId} no encontrado.`);
+            return;  // Sale de la función si el elemento no se encuentra
+        }
+
+        console.log(`Elemento avgRatingElem encontrado para feature model ${featureModelId}.`);
+
+        // Función para actualizar la visualización de las estrellas seleccionadas
+        function updateFeatureModelStarRating(rating) {
+            stars.forEach(star => {
+                star.style.color = parseInt(star.getAttribute('data-value')) <= rating ? 'yellow' : 'gray';
+            });
+        }
+
+        // Añade el evento para cada estrella
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                selectedRating = parseInt(star.getAttribute('data-value'));
+                console.log(`Estrella seleccionada: ${selectedRating} para Feature Model ID: ${featureModelId}`);
+                updateFeatureModelStarRating(selectedRating);
+            });
+        });
+
+        // Evento para el botón de calificación
+        rateBtn.addEventListener('click', function () {
+            if (selectedRating === 0) {
+                alert('Please select a rating');
+                return;
+            }
+
+            console.log(`Enviando calificación de ${selectedRating} para Feature Model ID: ${featureModelId}`);
+
+            fetch(`/featuremodel/${featureModelId}/rate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({ rating: selectedRating })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert(data.message);
+                    updateFeatureModelAverageRating(featureModelId);
+                }
+            })
+            .catch(error => {
+                console.error("Error in rating request:", error);
+            });
+        });
+
+        // Carga el average rating al inicio
+        updateFeatureModelAverageRating(featureModelId);
+    });
+});
+
+// Función para actualizar el average rating de cada feature model
+function updateFeatureModelAverageRating(featureModelId) {
+    const avgRatingElem = document.getElementById(`mini-avg-rating-${featureModelId}`);
+    if (!avgRatingElem) {
+        console.error(`Elemento con ID mini-avg-rating-${featureModelId} no encontrado en updateFeatureModelAverageRating.`);
+        return;
+    }
+
+    console.log(`Actualizando average rating para Feature Model ID: ${featureModelId}`);
+
+    avgRatingElem.textContent = "Loading...";
+    fetch(`/featuremodel/${featureModelId}/average_rating`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data received for feature model:", data);  // Verifica que los datos sean correctos
+            const avgRating = parseFloat(data.average_rating);
+            if (!isNaN(avgRating) && avgRating > 0) {
+                avgRatingElem.textContent = avgRating.toFixed(2);
+            } else {
+                avgRatingElem.textContent = "No rate";
+            }
+        })
+        .catch(error => {
+            console.error("Error retrieving the average rating for feature model:", error);
+            avgRatingElem.textContent = "Error loading";
+        });
+}
+
+
 
 </script>
 
