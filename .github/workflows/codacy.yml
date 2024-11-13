@@ -1,6 +1,7 @@
 name: Codacy CI
 
 on:
+
   push:
     branches:
       - main
@@ -11,7 +12,9 @@ on:
       - develop
 
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
 
     services:
@@ -43,22 +46,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Clean WebDriver Manager Cache
-      run: |
-        rm -rf /home/runner/.wdm
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    - name: Edit WebDriver Manager drivers.json
-      run: |
-        # Asegúrate de que el archivo existe
-        if [ -f /home/runner/.wdm/drivers.json ]; then
-          # Usa `jq` para modificar el archivo JSON, reemplazando el path del chromedriver
-          jq '.chromedriver[].binary_path = "/home/runner/.wdm/drivers/chromedriver/linux64/130.0.6723.116/chromedriver-linux64/chromedriver"' /home/runner/.wdm/drivers.json > /home/runner/.wdm/drivers.json.tmp && mv /home/runner/.wdm/drivers.json.tmp /home/runner/.wdm/drivers.json
-        fi
 
     - name: Security audit with pip-audit
       run: |
