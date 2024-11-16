@@ -165,7 +165,16 @@ class DataSetService(BaseService):
         user_profile = dataset.user.profile
         domain = os.getenv('DOMAIN', 'localhost')
         return f'http://{domain}/profile/{user_profile.user_id}'
-
+    
+    def get_datasets_ordered_by_rating(self):
+        datasets_with_ratings = (
+            db.session.query(DataSet, func.avg(DatasetRating.rating).label('average_rating'))
+            .outerjoin(DatasetRating, DataSet.id == DatasetRating.dataset_id)
+            .group_by(DataSet.id)
+            .order_by(func.avg(DatasetRating.rating).desc())
+            .all()
+        )
+        return datasets_with_ratings
 
 
 class AuthorService(BaseService):
