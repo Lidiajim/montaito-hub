@@ -90,6 +90,12 @@ chico sundermann">
                         </a>
                     </li>
 
+                    <li class="sidebar-item {{ 'active' if request.endpoint == 'auth.show_signup_form' else '' }}">
+                        <a class="sidebar-link" href="{{ url_for('dashboard.index') }}">
+                            <i class="align-middle" data-feather="user-plus"></i> <span
+                                class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
                 {% else %}
 
                     <li class="sidebar-header">

@@ -1,0 +1,82 @@
+{% extends "base_template.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Dashboard</h1>
+
+    <!-- Métricas Principales -->
+    <div class="row">
+        <!-- Total Datasets -->
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-primary text-white">
+                    <h3>Total Datasets</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.total_datasets }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Users -->
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-success text-white">
+                    <h3>Total Users</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.total_users }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Rating -->
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header bg-warning text-white">
+                    <h3>Average Dataset Rating</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.average_rating }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas Secundarias -->
+    <div class="row mt-4">
+        <!-- Total Views -->
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-header bg-info text-white">
+                    <h3>Total Views</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.total_views }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Downloads -->
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-header bg-danger text-white">
+                    <h3>Total Downloads</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.total_downloads }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    console.log("Dashboard loaded successfully.");
+</script>
+{% endblock %}
