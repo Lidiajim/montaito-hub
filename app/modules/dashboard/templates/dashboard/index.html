@@ -45,38 +45,28 @@
         </div>
     </div>
 
-    <!-- Métricas Secundarias -->
+    <!-- Comparación de Visitas y Descargas -->
     <div class="row mt-4">
-        <!-- Total Views -->
-        <div class="col-md-6">
-            <div class="card text-center">
-                <div class="card-header bg-info text-white">
-                    <h3>Total Views</h3>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h3>Total Views vs Total Downloads</h3>
                 </div>
                 <div class="card-body">
-                    <p class="display-4">{{ data.total_views }}</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Downloads -->
-        <div class="col-md-6">
-            <div class="card text-center">
-                <div class="card-header bg-danger text-white">
-                    <h3>Total Downloads</h3>
-                </div>
-                <div class="card-body">
-                    <p class="display-4">{{ data.total_downloads }}</p>
+                    <canvas id="viewsDownloadsChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Datos dinámicos para la gráfica -->
+    <div id="totalViews" style="display: none;">{{ data.total_views | default(0) }}</div>
+    <div id="totalDownloads" style="display: none;">{{ data.total_downloads | default(0) }}</div>
+
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script>
-    console.log("Dashboard loaded successfully.");
-</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/index_dashboard.js') }}"></script>
 {% endblock %}
