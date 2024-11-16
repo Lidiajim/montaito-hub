@@ -1,10 +1,10 @@
 {% extends "base_template.html" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}User Dashboard{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1>Dashboard</h1>
+    <h1>Dashboard Profile</h1>
 
     <!-- Métricas Principales -->
     <div class="row">
@@ -46,21 +46,21 @@
             </div>
         </div>
 
-        <!-- Total Users -->
+        <!-- Total Views -->
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-header" style="background-color: #e67e22; color: white;">
-                    <h3>Total Users</h3>
+                    <h3>Total Views</h3>
                 </div>
                 <div class="card-body">
-                    <p class="display-4">{{ data.total_users }}</p>
+                    <p class="display-4">{{ data.total_views }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Gráfica -->
     <div class="row mt-4">
+        <!-- Total Downloads - Total Views Chart -->
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-secondary text-white text-center">
