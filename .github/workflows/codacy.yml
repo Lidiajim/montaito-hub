@@ -43,25 +43,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    # Limpia la caché de WebDriver Manager y el archivo drivers.json para evitar errores de formato
-    - name: Clean WebDriver Manager Cache
-      run: |
-        rm -rf /home/runner/.wdm
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    - name: Install and Set Up WebDriver
-      run: |
-        # Descarga y establece el chromedriver correcto
-        python -c "from webdriver_manager.chrome import ChromeDriverManager; ChromeDriverManager().install()"
-        
-        # Verifica el archivo drivers.json y apunta a la ruta correcta del binario
-        if [ -f /home/runner/.wdm/drivers.json ]; then
-          sed -i 's|THIRD_PARTY_NOTICES.chromedriver|chromedriver|g' /home/runner/.wdm/drivers.json
-        fi
 
     - name: Security audit with pip-audit
       run: |
