@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - develop
+      - bugfix/#22-bug-codacy
   pull_request:
     branches:
       - main
       - develop
+      - bugfix/#22-bug-codacy
 
 jobs:
   build:
