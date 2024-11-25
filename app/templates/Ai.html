@@ -1,0 +1,36 @@
+<script>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <form id="chat-form">
+            <input type="text" id="chat-input" placeholder="Type your message here..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    
+document.getElementById('chat-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const input = document.getElementById('chat-input');
+    const message = input.value;
+    input.value = '';
+
+    fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messages = document.getElementById('messages');
+        const userMessage = document.createElement('div');
+        userMessage.textContent = 'You: ' + message;
+        messages.appendChild(userMessage);
+
+        const botMessage = document.createElement('div');
+        botMessage.textContent = 'Bot: ' + data.response;
+        messages.appendChild(botMessage);
+    });
+});
+
+</script>
