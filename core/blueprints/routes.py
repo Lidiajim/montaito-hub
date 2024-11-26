@@ -1,14 +1,13 @@
 from flask import Flask, request, jsonify
 import os
 from google.cloud import dialogflow_v2 as dialogflow
-from dotenv import load_dotenv
 
 app = Flask(__name__)
 
 # Configuración de autenticación de Google Cloud
-load_dotenv()
-project_id = os.getenv("DIALOGFLOW_PROJECT_ID", "amazing-source-213816")
-language_code = os.getenv("DIALOGFLOW_LANGUAGE_CODE", "es")
+
+project_id = "amazing-source-213816"
+language_code = "es"
 
 
 # Función para enviar consultas a Dialogflow
