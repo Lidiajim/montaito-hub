@@ -1,11 +1,13 @@
+
+<div id="chat-container">
+    <div id="messages"></div>
+    <form id="chat-form">
+        <input type="text" id="chat-input" placeholder="Type your message here..." required>
+        <button type="submit">Send</button>
+    </form>
+</div>
 <script>
-    <div id="chat-container">
-        <div id="messages"></div>
-        <form id="chat-form">
-            <input type="text" id="chat-input" placeholder="Type your message here..." required>
-            <button type="submit">Send</button>
-        </form>
-    </div>
+
     
 document.getElementById('chat-form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -20,6 +22,7 @@ document.getElementById('chat-form').addEventListener('submit', function(event) 
         },
         body: JSON.stringify({ text: message })
     })
+    
     .then(response => response.json())
     .then(data => {
         const messages = document.getElementById('messages');
@@ -34,3 +37,37 @@ document.getElementById('chat-form').addEventListener('submit', function(event) 
 });
 
 </script>
+<style>
+    #chat-container {
+        width: 300px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    #messages {
+        height: 200px;
+        overflow-y: scroll;
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    #messages div {
+        margin-bottom: 10px;
+    }
+
+    #chat-form {
+        display: flex;
+    }
+
+    #chat-input {
+        flex: 1;
+        padding: 5px;
+    }
+
+    #chat-form button {
+        padding: 5px 10px;
+    }
+</style>
