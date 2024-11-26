@@ -1,5 +1,50 @@
-2024-11-26 18:08:06,158 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-11-26 18:10:07,136 - app - ERROR - Exception on /chat [POST]
+2024-11-26 18:15:53,835 - app - ERROR - Exception on /chat [POST]
+Traceback (most recent call last):
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/public/routes.py", line 62, in chat
+    response_text = detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/public/routes.py", line 54, in detect_intent_texts
+    response = session_client.detect_intent(session=session, query_input=query_input)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 883, in detect_intent
+    response = rpc(
+               ^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 Input text not set.
+2024-11-26 18:15:53,841 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-11-26 18:23:38,680 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -44,50 +89,4 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
     raise exceptions.from_grpc_error(exc) from exc
 google.api_core.exceptions.InvalidArgument: 400 Input text not set.
-2024-11-26 18:10:07,144 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-11-26 18:12:54,436 - app - ERROR - Exception on /chat [POST]
-Traceback (most recent call last):
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
-    return original_handler(e)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/public/routes.py", line 62, in chat
-    response_text = detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/public/routes.py", line 54, in detect_intent_texts
-    response = session_client.detect_intent(request={"session": session, "query_input": query_input})
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 883, in detect_intent
-    response = rpc(
-               ^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
-    return wrapped_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
-    return retry_target(
-           ^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
-    _retry_error_helper(
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
-    raise final_exc from source_exc
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
-    result = target()
-             ^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
-    raise exceptions.from_grpc_error(exc) from exc
-google.api_core.exceptions.InvalidArgument: 400 Input text not set.
-2024-11-26 18:12:54,449 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-11-26 18:23:38,684 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
