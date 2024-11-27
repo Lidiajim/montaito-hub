@@ -1,17 +1,19 @@
-2024-11-26 18:55:49,818 - app - ERROR - Exception on /chat [POST]
+2024-11-26 20:07:44,708 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 451, in _get_service_account_credentials
-    credentials = service_account.Credentials.from_service_account_info(
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/oauth2/service_account.py", line 243, in from_service_account_info
-    signer = _service_account_info.from_dict(
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_service_account_info.py", line 57, in from_dict
-    signer = crypt.RSASigner.from_service_account_info(data)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/crypt/base.py", line 105, in from_service_account_info
-    raise exceptions.MalformedError(
-google.auth.exceptions.MalformedError: The private_key field was not found in the service account info.
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 65, in error_remapped_callable
+    return callable_(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/grpc/_channel.py", line 1181, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAUTHENTICATED
+	details = "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:142.250.184.10:443 {created_time:"2024-11-26T20:07:44.706335977+00:00", grpc_status:16, grpc_message:"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."}"
+>
 
 The above exception was the direct cause of the following exception:
 
@@ -31,40 +33,42 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 25, in chat
-    response_text = detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 11, in detect_intent_texts
-    session_client = dialogflow.SessionsClient()
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 720, in __init__
-    self._transport = transport_init(
-                      ^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/transports/grpc.py", line 158, in __init__
-    super().__init__(
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/transports/base.py", line 105, in __init__
-    credentials, _ = google.auth.default(
-                     ^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 663, in default
-    credentials, project_id = checker()
-                              ^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 656, in <lambda>
-    lambda: _get_explicit_environ_credentials(quota_project_id=quota_project_id),
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 271, in _get_explicit_environ_credentials
-    credentials, project_id = load_credentials_from_file(
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 126, in load_credentials_from_file
-    return _load_credentials_from_info(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 188, in _load_credentials_from_info
-    credentials, project_id = _get_service_account_credentials(
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 457, in _get_service_account_credentials
-    raise new_exc from caught_exc
-google.auth.exceptions.DefaultCredentialsError: ('Failed to load service account credentials from /home/user/Desktop/uvlhub_practicas/montaito-hub/core/blueprints/dialogflow_credentials.json', MalformedError('The private_key field was not found in the service account info.'))
-2024-11-26 18:55:49,841 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-11-26 18:58:51,890 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 26, in chat
+    response_text = ai_service.detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/services.py", line 14, in detect_intent_texts
+    response = session_client.detect_intent(request={"session": session, "query_input": query_input})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 883, in detect_intent
+    response = rpc(
+               ^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 113, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry.py", line 349, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry.py", line 191, in retry_target
+    return target()
+           ^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 67, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.Unauthenticated: 401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. [reason: "ACCESS_TOKEN_EXPIRED"
+domain: "googleapis.com"
+metadata {
+  key: "method"
+  value: "google.cloud.dialogflow.v2.Sessions.DetectIntent"
+}
+metadata {
+  key: "service"
+  value: "dialogflow.googleapis.com"
+}
+]
+2024-11-26 20:07:44,735 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-11-27 18:12:59,753 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -81,32 +85,30 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 25, in chat
-    response_text = detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 17, in detect_intent_texts
-    response = session_client.detect_intent(request={"session": session, "query_input": query_input})
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 883, in detect_intent
-    response = rpc(
-               ^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
-    return wrapped_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
-    return retry_target(
-           ^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
-    _retry_error_helper(
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
-    raise final_exc from source_exc
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
-    result = target()
-             ^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
-    raise exceptions.from_grpc_error(exc) from exc
-google.api_core.exceptions.PermissionDenied: 403 IAM permission 'dialogflow.sessions.detectIntent' on 'projects/amazing-source-213816/agent' denied.
-2024-11-26 18:58:51,893 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 24, in chat
+    response_text = "Los datasets disponibles son:\n" + "\n".join(datasets_counter)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: can only join an iterable
+2024-11-27 18:12:59,758 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-11-27 18:16:38,633 - app - ERROR - Exception on /chat [POST]
+Traceback (most recent call last):
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 30, in chat
+    response_text = "Los features disponibles son:\n" + "\n".join(map(str, feature_models_counter))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'int' object is not iterable
+2024-11-27 18:16:38,635 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
