@@ -41,6 +41,7 @@ El proyecto consiste en un fork o una evolución de la aplicación UVLHub, en el
 | 16/10/2024  | 1.0     | Creación del documento     |
 | 18/10/2024  | 1.1     | Desarrollo del documento   |
 | 16/11/2024  | 1.2     | Modificación politicas     |
+| 01/12/2024  | 1.3     | Actualización política PR  |
 
 ## 3. Hitos
 | ID | Descripción                      | Fecha de Entrega |
@@ -104,7 +105,48 @@ Cada issue deberá contener una descripción que siga la siguiente plantilla:
 Además, se asignarán uno o varios miembros a cada issue, con la finalidad de tener un control sobre la carga equitativa de trabajo y sobre el desarrollo de cada tarea, marcando en todo momento el estado en el que se encuentra.
 
 ## 7. Políticas de Pull Requests
-Crear un Pull Requests para cualquier cambio en la rama `main` o `develop`. Requiere la revisión de al menos un integrante antes de aprobar aquel PR dirigido a `main` o `develop`, que afecte al menos a un módulo o aquel cambio que haya surgido por la colaboración de más de un integrante. Incluir en cada PR: descripción del cambio realizado.
+
+### Requisitos Generales para Pull Requests
+- Se debe abrir un Pull Request (PR) para cualquier cambio destinado a las ramas `main` o `develop`.
+- Todo PR debe ser revisado por al menos un integrante del equipo antes de ser fusionado, especialmente si:
+  - Afecta al menos a un módulo del proyecto.
+  - Surge como resultado de la colaboración entre varios integrantes.
+- El PR deberá cumplir con todas las políticas del proyecto, incluidas las relacionadas con ramas, commits e issues.
+- Los cambios introducidos en un PR deben superar todas las pruebas automatizadas configuradas en el proyecto (si las hay).
+
+### Requisitos para Colaboradores Externos
+- Los colaboradores externos deben realizar un fork del repositorio principal y trabajar sobre este.
+- Todos los cambios deben realizarse en una rama independiente dentro del fork, siguiendo la convención de nombres definida en las [Políticas de Ramas](#5-políticas-de-ramas). Ejemplo: `feature/#45-mejora-login`.
+- Abrir un PR desde la rama del fork hacia la rama `develop` del repositorio principal.
+- Asegúrate de que el PR cumpla con las mismas reglas aplicables a los miembros del equipo, incluyendo el formato de commits y la descripción.
+
+### Descripción Obligatoria para Pull Requests
+Cada PR debe incluir una descripción detallada para facilitar la revisión y el entendimiento del propósito de los cambios. Utiliza la siguiente plantilla para estructurar tu descripción:
+
+#### Plantilla de Descripción:
+- **Resumen del Cambio:** Explicación breve y concisa sobre qué problema se resuelve o qué funcionalidad se añade.  
+  Ejemplo: "Se implementa la validación de datos en el formulario de registro."
+- **Issue Relacionada:** Referencia directa al número de issue asociada, si aplica.  
+  Ejemplo: "Issue #45."
+- **Impacto en el Proyecto:** Indica los módulos o funcionalidades que se ven afectados por los cambios realizados.  
+  Ejemplo: "Auth y Dataset."
+- **Pasos para Probar:** Proporciona instrucciones claras para que los revisores puedan verificar los cambios.  
+  Ejemplo:
+  1. Clonar la rama y ejecutar el comando `npm start`.
+  2. Acceder al formulario de registro.
+  3. Completar los campos del formulario con datos inválidos y confirmar que aparecen los mensajes de error esperados.
+- **Dependencias Nuevas:** Indica cualquier librería, herramienta o configuración adicional necesaria para que los cambios funcionen.  
+  Ejemplo: "Se añadió la librería `express-validator`. Ejecutar `npm install` antes de probar."
+- **Notas Adicionales:** Cualquier detalle importante que no esté cubierto en los puntos anteriores.  
+  Ejemplo: "Incluye pruebas unitarias para los casos de validación de formulario."
+
+### Proceso de Revisión y Aprobación
+- Cada PR deberá ser revisado por al menos un miembro del equipo. Los cambios críticos o colaborativos requerirán la aprobación de al menos dos personas.
+- Los revisores deben proporcionar comentarios claros y específicos sobre cualquier problema identificado en el PR. El autor del PR deberá resolver todas las observaciones antes de que se apruebe.
+- Los conflictos con la rama base deben resolverse antes de solicitar la aprobación final.
+- Ningún PR será aceptado si falla en las pruebas automatizadas configuradas en el proyecto.
+- La fusión del PR solo podrá ser realizada por integrantes del equipo con permisos de escritura en el repositorio una vez que se haya aprobado.
+
 
 ## 8. Aprobación y Firma de los Integrantes
 Por la presente, los integrantes del equipo aceptan y se comprometen a seguir las políticas establecidas en esta acta.
