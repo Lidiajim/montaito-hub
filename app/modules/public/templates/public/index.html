@@ -84,6 +84,8 @@
 
                         </div>
 
+                        <p>Average Rating: <span id="avg-rating-{{ dataset.id }}">Loading...</span></p>
+
                         <div class="row  mt-4">
                             <div class="col-12">
                                 <a href="{{ dataset.get_uvlhub_doi() }}" class="btn btn-outline-primary btn-sm"
@@ -283,4 +285,42 @@
 
 {% block scripts %}
     <script src="{{ url_for('public.scripts') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // Para cada dataset en la página, carga el average rating
+        document.querySelectorAll('[id^="avg-rating-"]').forEach(function(ratingElem) {
+            // Obtener el ID del dataset desde el elemento ID
+            const datasetId = ratingElem.id.split('-')[2];
+            
+            // Función para actualizar el average rating
+            function updateAverageRating(datasetId) {
+                console.log(`Fetching average rating for dataset ID: ${datasetId}`);
+                
+                fetch(`/dataset/${datasetId}/average_rating`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(`Data received for dataset ${datasetId}:`, data);  // Verifica el formato de los datos recibidos
+                        const avgRating = parseFloat(data.average_rating);
+if (!isNaN(avgRating) && avgRating > 0) {
+    ratingElem.textContent = avgRating.toFixed(2);
+} else {
+    ratingElem.textContent = "No rate";
+}
+                    })
+                    .catch(error => {
+                        console.error(`Error retrieving the average rating for dataset ${datasetId}:`, error);
+                        ratingElem.textContent = "Error loading";
+                    });
+            }
+
+            // Llamada inicial para cargar el average rating
+            updateAverageRating(datasetId);
+        });
+    });
+    </script>
 {% endblock %}
