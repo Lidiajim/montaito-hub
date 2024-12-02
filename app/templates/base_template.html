@@ -70,6 +70,12 @@ chico sundermann">
                             class="align-middle">Team</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ 'active' if request.endpoint == 'ai.ai' else '' }}">
+                    <a class="sidebar-link" href="{{ url_for('ai.ai') }}">
+                        <i class="align-middle" data-feather="cpu"></i> <span class="align-middle">IA</span>
+                    </a>
+                </li>
+                
 
                 {% if current_user.is_anonymous %}
 
@@ -127,6 +133,7 @@ chico sundermann">
                                 class="align-middle">Log out</span>
                         </a>
                     </li>
+
 
                 {% endif %}
 
