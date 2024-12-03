@@ -1,4 +1,4 @@
-2024-11-26 19:32:23,848 - app - ERROR - Exception on /chat [POST]
+2024-12-03 09:47:37,508 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -15,12 +15,12 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 27, in chat
-    if req['queryResult']['intent']['displayName'] == 'GetDatasets':
-       ~~~^^^^^^^^^^^^^^^
-KeyError: 'queryResult'
-2024-11-26 19:32:23,851 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-11-26 19:32:29,438 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 47, in chat
+    dataset_names = [dataset.title for dataset in latest_datasets]
+                     ^^^^^^^^^^^^^
+AttributeError: 'DataSet' object has no attribute 'title'
+2024-12-03 09:47:37,510 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-03 09:49:16,668 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -37,12 +37,12 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 27, in chat
-    if req['queryResult']['intent']['displayName'] == 'GetDatasets':
-       ~~~^^^^^^^^^^^^^^^
-KeyError: 'queryResult'
-2024-11-26 19:32:29,440 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-11-26 19:34:30,809 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 48, in chat
+    response_text = "Los datasets más recientes son:\n" + "\n".join(dataset_names)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: sequence item 0: expected str instance, int found
+2024-12-03 09:49:16,670 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-03 09:51:40,225 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -59,12 +59,12 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 27, in chat
-    if req['queryResult']['intent']['displayName'] == 'GetDatasets':
-       ~~~^^^^^^^^^^^^^^^
-KeyError: 'queryResult'
-2024-11-26 19:34:30,815 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-11-26 19:37:08,854 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 46, in chat
+    latest_features = feature_model_service.latest_feature_models()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'FeatureModelService' object has no attribute 'latest_feature_models'. Did you mean: 'count_feature_models'?
+2024-12-03 09:51:40,228 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-03 09:52:00,966 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -81,8 +81,30 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 27, in chat
-    if req['intent'] == 'GetDatasets':
-       ~~~^^^^^^^^^^
-KeyError: 'intent'
-2024-11-26 19:37:08,864 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 46, in chat
+    latest_features = feature_model_service.latest_feature_models()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'FeatureModelService' object has no attribute 'latest_feature_models'. Did you mean: 'count_feature_models'?
+2024-12-03 09:52:00,970 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-03 10:01:14,577 - app - ERROR - Exception on /chat [POST]
+Traceback (most recent call last):
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 51, in chat
+    response_text = "Los features más recientes son\n" + str(feature_model_service.latest_feature_models())
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'FeatureModelService' object has no attribute 'latest_feature_models'. Did you mean: 'count_feature_models'?
+2024-12-03 10:01:14,581 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.

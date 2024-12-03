@@ -1,66 +1,19 @@
-2024-11-26 18:33:23,137 - app - ERROR - Exception on /chat [POST]
+2024-12-02 11:04:59,967 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
-    return original_handler(e)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/public/routes.py", line 62, in chat
-    response_text = detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/public/routes.py", line 54, in detect_intent_texts
-    response = session_client.detect_intent(request={"session": session, "query_input": query_input})
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 883, in detect_intent
-    response = rpc(
-               ^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
-    return wrapped_func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
-    return retry_target(
-           ^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
-    _retry_error_helper(
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
-    raise final_exc from source_exc
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
-    result = target()
-             ^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
-    raise exceptions.from_grpc_error(exc) from exc
-google.api_core.exceptions.InvalidArgument: 400 Input text not set.
-2024-11-26 18:33:23,140 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-11-26 18:55:17,973 - app - ERROR - Exception on /chat [POST]
-Traceback (most recent call last):
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 120, in load_credentials_from_file
-    info = json.load(file_obj)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/json/__init__.py", line 293, in load
-    return loads(fp.read(),
-           ^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 65, in error_remapped_callable
+    return callable_(*args, **kwargs)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/grpc/_channel.py", line 1181, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAUTHENTICATED
+	details = "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:142.250.184.170:443 {created_time:"2024-12-02T11:04:59.952275716+00:00", grpc_status:16, grpc_message:"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."}"
+>
 
 The above exception was the direct cause of the following exception:
 
@@ -80,30 +33,38 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 25, in chat
-    response_text = detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 11, in detect_intent_texts
-    session_client = dialogflow.SessionsClient()
-                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 720, in __init__
-    self._transport = transport_init(
-                      ^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/transports/grpc.py", line 158, in __init__
-    super().__init__(
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/transports/base.py", line 105, in __init__
-    credentials, _ = google.auth.default(
-                     ^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 663, in default
-    credentials, project_id = checker()
-                              ^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 656, in <lambda>
-    lambda: _get_explicit_environ_credentials(quota_project_id=quota_project_id),
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 271, in _get_explicit_environ_credentials
-    credentials, project_id = load_credentials_from_file(
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/auth/_default.py", line 125, in load_credentials_from_file
-    raise new_exc from caught_exc
-google.auth.exceptions.DefaultCredentialsError: ('File /home/user/Desktop/uvlhub_practicas/montaito-hub/core/blueprints/dialogflow_credentials.json is not a valid json file.', JSONDecodeError('Expecting value: line 1 column 1 (char 0)'))
-2024-11-26 18:55:17,991 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 19, in chat
+    response_text = ai_service.detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/services.py", line 14, in detect_intent_texts
+    response = session_client.detect_intent(request={"session": session, "query_input": query_input})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/cloud/dialogflow_v2/services/sessions/client.py", line 883, in detect_intent
+    response = rpc(
+               ^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 113, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry.py", line 349, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/retry.py", line 191, in retry_target
+    return target()
+           ^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 120, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 67, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.Unauthenticated: 401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. [reason: "ACCESS_TOKEN_EXPIRED"
+domain: "googleapis.com"
+metadata {
+  key: "method"
+  value: "google.cloud.dialogflow.v2.Sessions.DetectIntent"
+}
+metadata {
+  key: "service"
+  value: "dialogflow.googleapis.com"
+}
+]
+2024-12-02 11:04:59,980 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
