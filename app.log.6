@@ -1,4 +1,4 @@
-2024-12-02 11:04:59,967 - app - ERROR - Exception on /chat [POST]
+2024-12-02 11:11:44,835 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 65, in error_remapped_callable
     return callable_(*args, **kwargs)
@@ -12,7 +12,7 @@ Traceback (most recent call last):
 grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
 	status = StatusCode.UNAUTHENTICATED
 	details = "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
-	debug_error_string = "UNKNOWN:Error received from peer ipv4:142.250.184.170:443 {created_time:"2024-12-02T11:04:59.952275716+00:00", grpc_status:16, grpc_message:"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."}"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:142.250.184.170:443 {created_time:"2024-12-02T11:11:44.833920962+00:00", grpc_status:16, grpc_message:"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."}"
 >
 
 The above exception was the direct cause of the following exception:
@@ -67,4 +67,48 @@ metadata {
   value: "dialogflow.googleapis.com"
 }
 ]
-2024-12-02 11:04:59,980 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-02 11:11:44,842 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-03 09:46:32,849 - app - ERROR - Exception on /chat [POST]
+Traceback (most recent call last):
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 48, in chat
+    response_text = "Los datasets más recientes son:\n" + "\n".join(dataset_names)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: sequence item 0: expected str instance, method found
+2024-12-03 09:46:32,851 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-03 09:47:33,282 - app - ERROR - Exception on /chat [POST]
+Traceback (most recent call last):
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 47, in chat
+    dataset_names = [dataset.title for dataset in latest_datasets]
+                     ^^^^^^^^^^^^^
+AttributeError: 'DataSet' object has no attribute 'title'
+2024-12-03 09:47:33,284 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
