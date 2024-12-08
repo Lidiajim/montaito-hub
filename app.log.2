@@ -1,0 +1,68 @@
+2024-11-16 16:53:52,327 - app - ERROR - Exception on /dashboard/profile [GET]
+Traceback (most recent call last):
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/dashboard/routes.py", line 21, in index_id
+    dashboard_data = dashboard_service.get_dashboard_user_data(current_user.id)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/dashboard/services.py", line 27, in get_dashboard_user_data
+    "total_downloads": self.repository.get_total_downloads_by_user_id(user_id)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/dashboard/repositories.py", line 93, in get_total_downloads_by_user_id
+    return self.ds_download_record_repository.total_dataset_downloads_by_user_id(user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/dataset/repositories.py", line 39, in total_dataset_downloads_by_user_id
+    db.session.query(func.count(self.model.id))
+    ^^
+NameError: name 'db' is not defined
+2024-11-16 16:53:52,329 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-11-16 17:08:15,468 - app - ERROR - Exception on /dashboard/profile [GET]
+Traceback (most recent call last):
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/venv/lib/python3.11/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/dashboard/routes.py", line 21, in index_id
+    dashboard_data = dashboard_service.get_dashboard_user_data(current_user.id)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/dashboard/services.py", line 30, in get_dashboard_user_data
+    "total_features": self.repository.get_total_feature_models_by_user_id(user_id)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/dashboard/repositories.py", line 100, in get_total_feature_models_by_user_id
+    return self.feature_model_repository.count_feature_models_by_user_id(user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/alvarorugu7/Desktop/egc/montaito-hub/app/modules/featuremodel/repositories.py", line 18, in count_feature_models_by_user_id
+    .filter(self.model.user_id == user_id)
+           ^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'FeatureModel' has no attribute 'user_id'
+2024-11-16 17:08:15,470 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
