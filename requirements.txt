@@ -194,7 +194,6 @@ python-sat==1.8.dev13
 pytz==2024.1
 pyzmq==26.0.3
 requests==2.32.3
--e git+ssh://git@github.com/Lidiajim/montaito-hub.git@e1cb74d12dd06e232ac5cc0f8ef268ace83159f3#egg=rosemary
 rsa==4.9
 selenium==4.22.0
 selenium-wire==5.1.0
