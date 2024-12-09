@@ -304,3 +304,11 @@ def rate_dataset(dataset_id):
         return jsonify({"message": "Calificación guardada", "rating": rating_obj.rating}), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400  # Si la calificación no es válida (fuera de rango)
+    
+    
+@dataset_bp.route('/dataset/<int:dataset_id>', methods=['GET'])
+def view(dataset_id):
+    dataset = dataset_service.get_by_id(dataset_id)
+    if not dataset:
+        abort(404)
+    return render_template('dataset/view_dataset.html', dataset=dataset)

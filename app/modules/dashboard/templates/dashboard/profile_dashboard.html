@@ -1,0 +1,86 @@
+{% extends "base_template.html" %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Dashboard Profile</h1>
+
+    <!-- Métricas Principales -->
+    <div class="row">
+        <!-- Total Datasets -->
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header" style="background-color: #3498db; color: white;">
+                    <h3>Total Datasets</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.total_datasets }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Rating -->
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header" style="background-color: #f1c40f; color: white;">
+                    <h3>Average Dataset Rating</h3>
+                </div>
+                <div class="card-body">
+                    <div class="rating-container" data-rating="{{ data.average_rating }}">
+                    </div>
+                    <p id="avg-rating"><strong>{{ data.average_rating }}/5</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Features -->
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header" style="background-color: #2ecc71; color: white;">
+                    <h3>Total Features Models</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.total_features }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Views -->
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header" style="background-color: #e67e22; color: white;">
+                    <h3>Total Views</h3>
+                </div>
+                <div class="card-body">
+                    <p class="display-4">{{ data.total_views }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Total Downloads - Total Views Chart -->
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h3>Total Views - Total Downloads</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="viewsDownloadsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datos gráfica -->
+    <div id="totalViews" style="display: none;">{{ data.total_views | default(0) }}</div>
+    <div id="totalDownloads" style="display: none;">{{ data.total_downloads | default(0) }}</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/index_dashboard.js') }}"></script>
+<script src="{{ url_for('static', filename='js/rating_stars.js') }}"></script>
+{% endblock %}
