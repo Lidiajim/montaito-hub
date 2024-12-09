@@ -119,7 +119,3 @@ async def bot_info(ctx):
         "- !info: Muestra esta información."
     )
     await ctx.send(message)
-
-
-# Ejecutar el bot
-bot.run(os.getenv("DISCORD_BOT_TOKEN"))
