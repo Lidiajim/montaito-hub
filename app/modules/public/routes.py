@@ -1,7 +1,7 @@
 import logging
 
-from flask import render_template
-
+from flask import request, jsonify, render_template
+from google.cloud import dialogflow_v2 as dialogflow
 from app.modules.featuremodel.services import FeatureModelService
 from app.modules.public import public_bp
 from app.modules.dataset.services import DataSetService
