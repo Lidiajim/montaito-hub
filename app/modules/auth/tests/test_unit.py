@@ -117,3 +117,54 @@ def test_service_create_with_profile_fail_no_password(clean_database):
 
     assert UserRepository().count() == 0
     assert UserProfileRepository().count() == 0
+
+def test_reset_password_mismatched_passwords(test_client, clean_database):
+    data = {
+        "name": "Test",
+        "surname": "User",
+        "email": "mismatched_passwords@example.com",
+        "password": "password123"
+    }
+    user = AuthenticationService().create_with_profile(**data)
+    token = AuthenticationService().generate_password_reset_token(user.email)
+
+    reset_url = f"/reset_password/{token}"
+    response = test_client.post(
+        reset_url,
+        data={"password": "newpassword123", "password_confirm": "differentpassword123"},
+        follow_redirects=True
+    )
+
+    print(response.data.decode())
+
+    assert b"Passwords do not match" in response.data or b"confirm_password" in response.data, \
+        "The response does not indicate mismatched passwords"
+
+
+def test_remember_password_invalid_email(test_client, clean_database):
+    response = test_client.post(
+        "/remember_my_password",
+        data={"email": "nonexistent_user@example.com"},
+        follow_redirects=True
+    )
+
+    response_text = response.data.decode()
+    print("Response HTML:", response_text)
+
+    assert response.status_code == 200, "Unexpected status code"
+
+
+def test_remember_password_email_sent(test_client, clean_database):
+    data = {
+        "name": "Test",
+        "surname": "User",
+        "email": "user_test@example.com",
+        "password": "password123"
+    }
+    AuthenticationService().create_with_profile(**data)
+
+    response = test_client.post("/remember_my_password", 
+                                data={"email": "user_test@example.com"}, 
+                                follow_redirects=True)
+
+    assert response.status_code == 200, "Unexpected status code"
