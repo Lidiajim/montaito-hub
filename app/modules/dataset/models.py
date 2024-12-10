@@ -71,12 +71,12 @@ class DSMetaData(db.Model):
 class DataSet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
     ds_meta_data_id = db.Column(db.Integer, db.ForeignKey('ds_meta_data.id'), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     ds_meta_data = db.relationship('DSMetaData', backref=db.backref('data_set', uselist=False))
     feature_models = db.relationship('FeatureModel', backref='data_set', lazy=True, cascade="all, delete")
+    ratings = db.relationship('DatasetRating', back_populates='data_set', cascade="all, delete", lazy=True)
 
     def name(self):
         return self.ds_meta_data.title
@@ -107,6 +107,10 @@ class DataSet(db.Model):
     def get_uvlhub_doi(self):
         from app.modules.dataset.services import DataSetService
         return DataSetService().get_uvlhub_doi(self)
+
+    def get_profile(self):
+        from app.modules.dataset.services import DataSetService
+        return DataSetService().get_profile(self)
 
     def to_dict(self):
         return {
@@ -164,3 +168,14 @@ class DOIMapping(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dataset_doi_old = db.Column(db.String(120))
     dataset_doi_new = db.Column(db.String(120))
+
+
+class DatasetRating(db.Model):
+    __tablename__ = 'dataset_ratings'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    dataset_id = db.Column(db.Integer, db.ForeignKey('data_set.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)  
+    
+    data_set = db.relationship('DataSet', back_populates='ratings')

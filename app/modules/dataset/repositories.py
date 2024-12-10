@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 import logging
 from flask_login import current_user
 from typing import Optional
-
+from app import db  
 from sqlalchemy import desc, func
 
 from app.modules.dataset.models import (
@@ -31,6 +31,17 @@ class DSDownloadRecordRepository(BaseRepository):
         max_id = self.model.query.with_entities(func.max(self.model.id)).scalar()
         return max_id if max_id is not None else 0
 
+    def total_dataset_downloads_by_user_id(self, user_id) -> int:
+        """
+        Obtiene el número total de descargas de datasets asociados a un usuario específico.
+        """
+        total_downloads = (
+            db.session.query(func.count(self.model.id))
+            .join(DataSet, self.model.dataset_id == DataSet.id) 
+            .filter(DataSet.user_id == user_id)  
+            .scalar()
+        )
+        return total_downloads
 
 class DSMetaDataRepository(BaseRepository):
     def __init__(self):

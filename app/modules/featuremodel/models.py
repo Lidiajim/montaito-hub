@@ -10,6 +10,7 @@ class FeatureModel(db.Model):
     fm_meta_data_id = db.Column(db.Integer, db.ForeignKey('fm_meta_data.id'))
     files = db.relationship('Hubfile', backref='feature_model', lazy=True, cascade="all, delete")
     fm_meta_data = db.relationship('FMMetaData', uselist=False, backref='feature_model', cascade="all, delete")
+    ratings = db.relationship('FeatureModelRating', back_populates='feature_model', cascade="all, delete", lazy=True)
 
     def __repr__(self):
         return f'FeatureModel<{self.id}>'
@@ -40,3 +41,14 @@ class FMMetrics(db.Model):
 
     def __repr__(self):
         return f'FMMetrics<solver={self.solver}, not_solver={self.not_solver}>'
+
+
+class FeatureModelRating(db.Model):
+    __tablename__ = 'feature_model_ratings'
+
+    id = db.Column(db.Integer, primary_key=True)
+    feature_model_id = db.Column(db.Integer, db.ForeignKey('feature_model.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+
+    feature_model = db.relationship('FeatureModel', back_populates='ratings')

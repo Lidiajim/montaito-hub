@@ -1,14 +1,16 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, current_app
+from itsdangerous import URLSafeTimedSerializer
+
 from flask_login import current_user, login_user, logout_user
 
 from app.modules.auth import auth_bp
-from app.modules.auth.forms import SignupForm, LoginForm
+from app.modules.auth.forms import SignupForm, LoginForm, RememberPassword, ResetPasswordForm
 from app.modules.auth.services import AuthenticationService
-from app.modules.profile.services import UserProfileService
+
+from app import db
 
 
 authentication_service = AuthenticationService()
-user_profile_service = UserProfileService()
 
 
 @auth_bp.route("/signup/", methods=["GET", "POST"])
@@ -53,3 +55,47 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('public.index'))
+
+
+@auth_bp.route('/remember_my_password', methods=['GET', 'POST'])
+def show_remember_my_password_form():
+    if current_user.is_authenticated:
+        return redirect(url_for('public.index'))
+
+    form = RememberPassword()
+    if request.method == 'POST' and form.validate_on_submit():
+        if not authentication_service.is_email_available(form.email.data):
+            user_mail = form.email.data
+            token = authentication_service.generate_password_reset_token(user_mail)
+            reset_url = url_for('auth.reset_password', token=token, _external=True)
+            
+            body = f"Usa el siguiente enlace para restablecer tu contraseña: {reset_url}"
+            authentication_service.send_mail(
+                "Restablecimiento de contraseña", body, "uvlhubpass@gmail.com", user_mail, "vvix cekw edup vaml"
+            )
+            return redirect(url_for('public.index'))
+
+        return render_template("auth/remember_password_form.html", form=form, error='Invalid credentials')
+
+    return render_template('auth/remember_password_form.html', form=form)
+
+
+@auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    email = authentication_service.verify_password_reset_token(token)
+    if not email:
+        return redirect(url_for('auth.show_remember_my_password_form', error='Token inválido o expirado'))
+
+    form = ResetPasswordForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        user = authentication_service.get_user_by_email(email)
+        new_password = form.password.data
+        user.set_password(new_password)
+        
+        db.session.commit()
+
+        return redirect(url_for('public.index'))
+
+    return render_template('auth/reset_password_form.html', form=form)
+
+

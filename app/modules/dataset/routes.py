@@ -19,6 +19,7 @@ from flask import (
 )
 from flask_login import login_required, current_user
 
+from app.modules.auth.services import AuthenticationService
 from app.modules.dataset.forms import DataSetForm
 from app.modules.dataset.models import (
     DSDownloadRecord
@@ -278,3 +279,36 @@ def get_unsynchronized_dataset(dataset_id):
         abort(404)
 
     return render_template("dataset/view_dataset.html", dataset=dataset)
+
+
+@dataset_bp.route('/dataset/<int:dataset_id>/average_rating', methods=['GET'])
+def get_average_rating(dataset_id):
+    dataset_service = DataSetService()
+    avg_rating = dataset_service.get_average_rating(dataset_id)
+    return jsonify({"average_rating": avg_rating}), 200
+
+
+@dataset_bp.route('/dataset/<int:dataset_id>/rate', methods=['POST'])
+def rate_dataset(dataset_id):
+    current_user = AuthenticationService().get_authenticated_user()  # Verifica si el usuario está logueado
+    if not current_user:
+        return jsonify({"error": "Debes estar logueado para calificar"}), 401  # Si no está logueado
+
+    rating = request.json.get('rating')
+    if not rating:
+        return jsonify({"error": "La calificación es obligatoria"}), 400
+
+    dataset_service = DataSetService()
+    try:
+        rating_obj = dataset_service.rate_dataset(dataset_id, current_user.id, rating)
+        return jsonify({"message": "Calificación guardada", "rating": rating_obj.rating}), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400  # Si la calificación no es válida (fuera de rango)
+    
+    
+@dataset_bp.route('/dataset/<int:dataset_id>', methods=['GET'])
+def view(dataset_id):
+    dataset = dataset_service.get_by_id(dataset_id)
+    if not dataset:
+        abort(404)
+    return render_template('dataset/view_dataset.html', dataset=dataset)

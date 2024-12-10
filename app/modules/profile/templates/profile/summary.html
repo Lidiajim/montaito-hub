@@ -30,6 +30,17 @@
 
 </div>
 
+<form action="{{ url_for('profile.generate_password_reset_link') }}" method="POST">
+    <div class="col-lg-6 col-12">
+        <p>Have you forgotten your password?
+        <button type="submit" class="btn btn-link">Remember My Password!</button>
+        </p>
+    </div>
+</form>
+
+
+
+
 <h1 class="h3 mb-3">User datasets</h1>
 
     {% if datasets %}
