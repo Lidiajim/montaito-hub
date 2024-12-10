@@ -1,4 +1,4 @@
-2024-11-26 20:00:37,220 - app - ERROR - Exception on /chat [POST]
+2024-12-03 18:04:59,166 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 65, in error_remapped_callable
     return callable_(*args, **kwargs)
@@ -12,7 +12,7 @@ Traceback (most recent call last):
 grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
 	status = StatusCode.UNAUTHENTICATED
 	details = "Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."
-	debug_error_string = "UNKNOWN:Error received from peer ipv4:216.58.215.170:443 {created_time:"2024-11-26T20:00:37.21887159+00:00", grpc_status:16, grpc_message:"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project."}"
+	debug_error_string = "UNKNOWN:Error received from peer ipv4:142.250.184.10:443 {grpc_message:"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.", grpc_status:16, created_time:"2024-12-03T18:04:59.160290751+00:00"}"
 >
 
 The above exception was the direct cause of the following exception:
@@ -33,7 +33,7 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 26, in chat
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 41, in chat
     response_text = ai_service.detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/services.py", line 14, in detect_intent_texts
@@ -67,4 +67,46 @@ metadata {
   value: "dialogflow.googleapis.com"
 }
 ]
-2024-11-26 20:00:37,226 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-03 18:04:59,178 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-04 07:49:58,472 - app - ERROR - Exception on /chat [POST]
+Traceback (most recent call last):
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
+    return original_handler(e)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 89, in chat
+    return jsonify({"response": response_text})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/json/__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/json/provider.py", line 214, in response
+    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/json/provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/json/provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type FeatureModel is not JSON serializable
+2024-12-04 07:49:58,478 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.

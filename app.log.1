@@ -1,4 +1,4 @@
-2024-12-03 10:19:25,776 - app - ERROR - Exception on /chat [POST]
+2024-12-10 18:57:17,545 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -15,12 +15,12 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 74, in chat
-    dataset = dataset_service.get_by_id(dataset_id).to_dict()
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'to_dict'
-2024-12-03 10:19:25,779 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-12-03 10:20:33,338 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 41, in chat
+    message = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['message']
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'payload'
+2024-12-10 18:57:17,547 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-10 18:57:23,463 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -37,12 +37,12 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 74, in chat
-    dataset = dataset_service.get_by_id(dataset_id).to_dict()
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'to_dict'
-2024-12-03 10:20:33,341 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-12-03 10:20:45,733 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 41, in chat
+    message = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['message']
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'payload'
+2024-12-10 18:57:23,465 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-10 18:58:20,440 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -59,12 +59,12 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 74, in chat
-    dataset = dataset_service.get_by_id(dataset_id).to_dict()
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'to_dict'
-2024-12-03 10:20:45,734 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-12-03 10:22:07,101 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 41, in chat
+    message = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['message']
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'payload'
+2024-12-10 18:58:20,441 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-10 18:58:48,989 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -81,12 +81,12 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 74, in chat
-    dataset = dataset_service.get_by_id(dataset_id).to_dict()
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'to_dict'
-2024-12-03 10:22:07,106 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-12-03 10:45:44,692 - app - ERROR - Exception on /chat [POST]
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 41, in chat
+    message = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['message']
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'payload'
+2024-12-10 18:58:48,990 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+2024-12-10 19:00:08,871 - app - ERROR - Exception on /chat [POST]
 Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
     response = self.full_dispatch_request()
@@ -103,29 +103,8 @@ Traceback (most recent call last):
   File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 86, in chat
-    feature_model = feature_model.to_dict()
-                    ^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'FeatureModel' object has no attribute 'to_dict'
-2024-12-03 10:45:44,694 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
-2024-12-03 10:50:41,379 - app - ERROR - Exception on /chat [POST]
-Traceback (most recent call last):
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask_restful/__init__.py", line 298, in error_router
-    return original_handler(e)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 87, in chat
-    feature_model = feature_model.to_dict()
-                    ^^^^^^^^^^^^^^^^^^^^^
-AttributeError: 'FMMetaData' object has no attribute 'to_dict'
+  File "/home/user/Desktop/uvlhub_practicas/montaito-hub/app/modules/ai/routes.py", line 41, in chat
+    message = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['message']
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'payload'
+2024-12-10 19:00:08,872 - app - ERROR - Internal Server Error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
