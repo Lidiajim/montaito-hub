@@ -34,23 +34,26 @@ def format_dataset_response(dataset):
         f"  Tamaño total: {dataset['total_size_in_human_format']}\n"
     )
 
+
 @ai_bp.route('/chat', methods=['POST'])
 def chat():
-    user_message = request.json.get('text')
-           
-    response_text = ai_service.detect_intent_texts(project_id, "unique-session-id", user_message, language_code)
+
+    message = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['message']
+    response_text = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['response_text']
+    print(response_text)
+    print(message)
+   
+    valor_inicial = response_text
     
     if response_text == 'dataset-numero':
-        datasets_counter = dataset_service.count_synchronized_datasets()
-        response_text = "Los datasets disponibles son\n" + str(datasets_counter)
+        response_text = dataset_service.count_synchronized_datasets()
         
     if response_text == 'feature-number':
-        feature_models_counter = feature_model_service.count_feature_models()
-        response_text = "Los features disponibles son\n" + str(feature_models_counter)
+        response_text = feature_model_service.count_feature_models()
         
     if response_text == 'dataset-downloads':
         total_dataset_downloads = dataset_service.total_dataset_downloads()
-        response_text = "El total de descargas de datasets es\n" + str(total_dataset_downloads)
+        response_text = "El total de descargas de datasets es " + str(total_dataset_downloads)
         
     if response_text == 'feature-downloads':
         total_feature_model_downloads = feature_model_service.total_feature_model_downloads()
@@ -67,8 +70,8 @@ def chat():
     if response_text == 'dataset-latest':
         latest_datasets = dataset_service.latest_synchronized()
         dataset_names = [str(dataset.id) for dataset in latest_datasets]  # Convertir a cadenas
-        response_text = "Los datasets más recientes son:\n" + "\n".join(dataset_names)
-        
+        response_text = "Los datasets más recientes son:".join(dataset_names)
+    '''      
     if response_text.startswith('dataset-get'):
         dataset_id = response_text.split(',')[-1]
         dataset = dataset_service.get_by_id(dataset_id)
@@ -85,8 +88,12 @@ def chat():
             response_text = "no se encontró el feature"
         else:
             response_text = feature_model
+    '''
+    if valor_inicial == response_text:
+        response_text = None
         
-    return jsonify({"response": response_text})
+    return jsonify({"message": message,
+                    "response": response_text})
 
 
 @ai_bp.route('/ai')
