@@ -76,12 +76,6 @@ chico sundermann">
                             class="align-middle">Team</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ 'active' if request.endpoint == 'ai.ai' else '' }}">
-                    <a class="sidebar-link" href="{{ url_for('ai.ai') }}">
-                        <i class="align-middle" data-feather="cpu"></i> <span class="align-middle">IA</span>
-                    </a>
-                </li>
-                
 
                 <li class="sidebar-header">
                     Dashboard
@@ -367,20 +361,21 @@ Romero-Organvidez, D., Galindo, J. A., Sundermann, C., Horcas, J.-M., & Benavide
         },
         body: JSON.stringify({ message: message })
       })
-      .then(response => response.json())
-      .then(data => {
-        const responseMessage = JSON.stringify(data.response);
-        renderBotResponse(responseMessage);
-      })
-      .catch(error => console.error('Error al enviar el mensaje:', error));
-    }
+        .then(response => response.json())
+        .then(data => {
+            const responseMessage = data;
+            renderBotResponse(responseMessage);
+        })
+        .catch(error => console.error('Error al enviar el mensaje:', error));
+
     function renderBotResponse(message) {
         const dfMessenger = document.querySelector('df-messenger');
-        if (message === "null") {
+        if (message.response === "null") {
             return;
-        } else {
-          dfMessenger.renderCustomText(message);
         }
+        dfMessenger.renderCustomText(message.message);
+        dfMessenger.renderCustomText(message.response);
+    }
     }
   </script>
 
