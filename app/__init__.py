@@ -12,6 +12,9 @@ from core.managers.config_manager import ConfigManager
 from core.managers.error_handler_manager import ErrorHandlerManager
 from core.managers.logging_manager import LoggingManager
 
+from app.modules.bot.bot import bot
+from threading import Thread
+
 # Load environment variables
 load_dotenv()
 
@@ -63,8 +66,17 @@ def create_app(config_name='development'):
             'DOMAIN': os.getenv('DOMAIN', 'localhost'),
             'APP_VERSION': get_app_version()
         }
-
+   
     return app
 
 
+def run_bot():
+    bot.run(os.getenv("DISCORD_BOT_TOKEN"))
+
+
 app = create_app()
+
+
+bot_thread = Thread(target=run_bot, daemon=True)
+bot_thread.start()
+app.run(host="127.0.0.1", port=5000)

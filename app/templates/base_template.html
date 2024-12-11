@@ -76,6 +76,12 @@ chico sundermann">
                             class="align-middle">Team</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ 'active' if request.endpoint == 'ai.ai' else '' }}">
+                    <a class="sidebar-link" href="{{ url_for('ai.ai') }}">
+                        <i class="align-middle" data-feather="cpu"></i> <span class="align-middle">IA</span>
+                    </a>
+                </li>
+                
 
                 <li class="sidebar-header">
                     Dashboard
@@ -162,6 +168,7 @@ chico sundermann">
                                 class="align-middle">Log out</span>
                         </a>
                     </li>
+
 
                 {% endif %}
 
@@ -335,6 +342,47 @@ Romero-Organvidez, D., Galindo, J. A., Sundermann, C., Horcas, J.-M., & Benavide
     }
 
 </script>
+
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="UvlAi"
+  agent-id="b8438298-b2e1-44a8-92fe-d2763b718c41"
+  language-code="es"
+></df-messenger>
+
+<script>
+    const dfMessenger = document.querySelector('df-messenger');
+    dfMessenger.addEventListener('df-response-received', function (event) {
+      const aiResponse = event.detail.response;
+      sendMessageToBackend(aiResponse);
+    });
+
+    // Función para enviar el mensaje al backend Flask
+    function sendMessageToBackend(message) {
+      fetch('/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: message })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const responseMessage = JSON.stringify(data.response);
+        renderBotResponse(responseMessage);
+      })
+      .catch(error => console.error('Error al enviar el mensaje:', error));
+    }
+    function renderBotResponse(message) {
+        const dfMessenger = document.querySelector('df-messenger');
+        if (message === "null") {
+            return;
+        } else {
+          dfMessenger.renderCustomText(message);
+        }
+    }
+  </script>
 
 {% block scripts %}{% endblock %}
 
