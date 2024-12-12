@@ -6,6 +6,7 @@ on:
       - main
       - develop
       - bugfix/#22-bug-codacy
+      - hotfix/#72-workflows-integration
   pull_request:
     branches:
       - main
