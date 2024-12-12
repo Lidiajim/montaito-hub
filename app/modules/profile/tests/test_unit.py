@@ -5,7 +5,7 @@ from app.modules.conftest import login, logout
 from app.modules.auth.models import User
 from app.modules.profile.models import UserProfile
 from app.modules.auth.services import AuthenticationService
-import jwt
+
 
 @pytest.fixture(scope="module")
 def test_client(test_client):
@@ -40,10 +40,12 @@ def test_edit_profile_page_get(test_client):
 
     logout(test_client)
 
+
 @pytest.fixture
 def auth_service(test_app):
     with test_app.app_context():
         return AuthenticationService()
+
 
 def test_generate_password_reset_token(auth_service):
     token = auth_service.generate_password_reset_token("user@example.com")
@@ -78,29 +80,6 @@ def test_generate_password_reset_link(test_client, auth_service):
 def test_generate_token(auth_service):
     token = auth_service.generate_password_reset_token("user@example.com")
     assert token is not None, "Token generation failed."
-
-
-def test_reset_password_with_token(test_client):
-    auth_service = AuthenticationService()
-
-    with test_client.application.app_context():
-        user = db.session.query(User).filter_by(email="user@example.com").first()
-        token = auth_service.generate_password_reset_token(user.email)
-        assert token is not None, "Token generation failed."
-
-    response = test_client.get(f"/reset_password/{token}")
-    assert response.status_code == 200, "Failed to access reset password page."
-
-    new_password = "newpassword123"
-    response = test_client.post(
-        f"/reset_password/{token}",
-        data={"password": new_password, "password_confirm": new_password},
-        follow_redirects=True
-    )
-    assert response.status_code == 200, "Failed to reset password."
-
-    login_response = login(test_client, "user@example.com", new_password)
-    assert login_response.status_code == 200, "Login with the new password was unsuccessful."
 
 
 def test_reset_password_flow(test_client, auth_service):
