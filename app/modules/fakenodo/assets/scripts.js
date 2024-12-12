@@ -1,1 +1,1 @@
-console.log("Hi, I am a script loaded from fakenodo module");
+console.log("Hello, I am a script which from the module fakenodo");
