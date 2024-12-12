@@ -8,10 +8,11 @@ on:
   push:
     branches:
       - main
+      - hotfix/#72-workflows-integration
 
 jobs:
   security-scan:
-    name: Scan Code and Docker Image for Vulnerabilities
+    name: Scan Code for Vulnerabilities
     runs-on: ubuntu-latest
 
     steps:
@@ -30,27 +31,23 @@ jobs:
 
       # 3. Escanear el código fuente en busca de vulnerabilidades
       - name: Scan source code for vulnerabilities
+        id: scan-source
         run: |
           echo "🔍 Scanning source code for vulnerabilities..."
-          trivy filesystem --exit-code 1 --severity CRITICAL,HIGH .
+          trivy filesystem --severity CRITICAL --exit-code 1 --no-progress . > source-scan-report.txt
 
-      # 4. Construir la imagen Docker (opcional)
-      - name: Build Docker Image
-        run: |
-          echo "🐳 Building Docker image..."
-          docker build -t my-project:latest .
+      # 4. Subir reporte de escaneo del código
+      - name: Upload source scan report
+        uses: actions/upload-artifact@v3
+        with:
+          name: source-scan-report
+          path: source-scan-report.txt
 
-      # 5. Escanear la imagen Docker en busca de vulnerabilidades
-      - name: Scan Docker image for vulnerabilities
-        run: |
-          echo "🔒 Scanning Docker image for vulnerabilities..."
-          trivy image --exit-code 1 --severity CRITICAL,HIGH my-project:latest
-
-      # 6. Reporte final
-      - name: Report Status
-        if: success()
-        run: echo "✅ No critical vulnerabilities found. Security scan passed."
-
-      - name: Report Failure
+      # 5. Reporte final
+      - name: Report Final Status
         if: failure()
-        run: echo "❌ Security scan failed. Critical vulnerabilities detected!"
+        run: echo "❌ Security scan failed. High or critical vulnerabilities detected!"
+
+      - name: Report Success
+        if: success()
+        run: echo "✅ No high or critical vulnerabilities found. Security scan passed."

@@ -2,8 +2,8 @@ name: Validate Commit Messages
 
 on:
   push:
-    branches:
-      - '**'
+    branches-ignore:
+      - main  # Ignorar eventos push en la rama main
 
 jobs:
   validate-commits:
@@ -14,11 +14,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Obtener historial de commits
-    - name: Get commit messages
-      run: git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%s" > commit-messages.txt
+    # 2. Configurar remotos y obtener historial
+    - name: Set up remote and fetch
+      run: |
+        git remote set-url origin https://github.com/${{ github.repository }}.git
+        git fetch --all
 
-    # 3. Validar mensajes de commit
+    # 3. Obtener mensajes de commits
+    - name: Get commit messages
+      run: git log $(git merge-base HEAD origin/main)..HEAD --pretty=format:"%s" > commit-messages.txt
+
+    # 4. Validar mensajes de commit
     - name: Validate commit messages
       run: |
         regex="^(feature|fix|docs|test|config): .{1,50}$"
