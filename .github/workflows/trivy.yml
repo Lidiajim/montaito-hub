@@ -34,7 +34,7 @@ jobs:
         id: scan-source
         run: |
           echo "🔍 Scanning source code for vulnerabilities..."
-          trivy filesystem --severity CRITICAL,HIGH --exit-code 1 --no-progress . > source-scan-report.txt || true
+          trivy filesystem --severity CRITICAL --exit-code 1 --no-progress . > source-scan-report.txt
 
       # 4. Subir reporte de escaneo del código
       - name: Upload source scan report
@@ -46,8 +46,8 @@ jobs:
       # 5. Reporte final
       - name: Report Final Status
         if: failure()
-        run: echo "❌ Security scan failed. Critical vulnerabilities detected!"
+        run: echo "❌ Security scan failed. High or critical vulnerabilities detected!"
 
       - name: Report Success
         if: success()
-        run: echo "✅ No critical vulnerabilities found. Security scan passed."
+        run: echo "✅ No high or critical vulnerabilities found. Security scan passed."
