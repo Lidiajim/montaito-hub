@@ -1,0 +1,72 @@
+name: Security Scan with Trivy
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+
+jobs:
+  security-scan:
+    name: Scan Code and Docker Image for Vulnerabilities
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Instalar Trivy
+      - name: Install Trivy
+        run: |
+          echo "🔍 Installing Trivy security scanner..."
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.47.0/trivy_0.47.0_Linux-64bit.deb
+          sudo dpkg -i trivy_0.47.0_Linux-64bit.deb
+
+      # 3. Escanear el código fuente en busca de vulnerabilidades
+      - name: Scan source code for vulnerabilities
+        id: scan-source
+        run: |
+          echo "🔍 Scanning source code for vulnerabilities..."
+          trivy filesystem --severity CRITICAL,HIGH --exit-code 1 --no-progress . > source-scan-report.txt || true
+
+      # 4. Subir reporte de escaneo del código
+      - name: Upload source scan report
+        uses: actions/upload-artifact@v3
+        with:
+          name: source-scan-report
+          path: source-scan-report.txt
+
+      # 5. Construir la imagen Docker
+      - name: Build Docker Image
+        run: |
+          echo "🐳 Building Docker image..."
+          docker build -t my-project:latest .
+
+      # 6. Escanear la imagen Docker en busca de vulnerabilidades
+      - name: Scan Docker image for vulnerabilities
+        id: scan-image
+        run: |
+          echo "🔒 Scanning Docker image for vulnerabilities..."
+          trivy image --severity CRITICAL,HIGH --exit-code 1 --no-progress my-project:latest > image-scan-report.txt || true
+
+      # 7. Subir reporte de escaneo de la imagen Docker
+      - name: Upload image scan report
+        uses: actions/upload-artifact@v3
+        with:
+          name: image-scan-report
+          path: image-scan-report.txt
+
+      # 8. Reporte final
+      - name: Report Final Status
+        if: failure()
+        run: echo "❌ Security scan failed. Critical vulnerabilities detected!"
+
+      - name: Report Success
+        if: success()
+        run: echo "✅ No critical vulnerabilities found. Security scan passed."
