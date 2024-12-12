@@ -12,6 +12,17 @@ project_id = "amazing-source-213816"
 language_code = "es"
 
 
+def format_feature_response(feature_model_dict):
+    return f"Feature Model: {feature_model_dict}"
+
+
+def sqlalchemy_to_dict(obj):
+    """
+    Convierte un objeto SQLAlchemy a un diccionario, excluyendo atributos no serializables.
+    """
+    return {c.name: getattr(obj, c.name) for c in obj.__table__.columns}
+
+
 def format_dataset_response(dataset):
     authors = "\n".join([f"  - {author['name']} ({author['affiliation']})" for author in dataset['authors']])
     files = "\n".join([f"  - {file['name']} ({file['size_in_human_format']})" for file in dataset['files']])
@@ -53,27 +64,28 @@ def chat():
         
     if response_text == 'dataset-downloads':
         total_dataset_downloads = dataset_service.total_dataset_downloads()
-        response_text = "El total de descargas de datasets es " + str(total_dataset_downloads)
+        response_text = total_dataset_downloads if total_dataset_downloads > 0 else 0
         
     if response_text == 'feature-downloads':
         total_feature_model_downloads = feature_model_service.total_feature_model_downloads()
-        response_text = "El total de descargas de features es\n" + str(total_feature_model_downloads)
+        response_text = total_feature_model_downloads if total_feature_model_downloads > 0 else 0
+        
         
     if response_text == 'dataset-views':
         total_dataset_views = dataset_service.total_dataset_views()
-        response_text = "El total de visualizaciones de datasets es\n" + str(total_dataset_views)
+        response_text = total_dataset_views
         
     if response_text == 'feature-views':
         total_feature_model_views = feature_model_service.total_feature_model_views()
-        response_text = "El total de visualizaciones de features es\n" + str(total_feature_model_views)
+        response_text = total_feature_model_views
         
     if response_text == 'dataset-latest':
         latest_datasets = dataset_service.latest_synchronized()
         dataset_names = [str(dataset.id) for dataset in latest_datasets]  # Convertir a cadenas
-        response_text = "Los datasets más recientes son:".join(dataset_names)
-    '''      
-    if response_text.startswith('dataset-get'):
-        dataset_id = response_text.split(',')[-1]
+        response_text = dataset_names
+
+    if response_text == 'dataset-get':
+        dataset_id = message
         dataset = dataset_service.get_by_id(dataset_id)
         if dataset is None:
             response_text = "no se encontró el dataset"
@@ -81,14 +93,15 @@ def chat():
             dataset = dataset.to_dict()
             response_text = format_dataset_response(dataset)
     
-    if response_text.startswith('feature-get'):
-        feature_model_id = response_text.split(',')[-1]
+    if response_text == 'feature-get':
+        feature_model_id = message
         feature_model = feature_model_service.get_by_id(feature_model_id)
         if feature_model is None:
             response_text = "no se encontró el feature"
         else:
-            response_text = feature_model
-    '''
+            feature_model_dict = sqlalchemy_to_dict(feature_model)
+            response_text = format_feature_response(feature_model_dict)
+
     if valor_inicial == response_text:
         response_text = None
         

@@ -1,4 +1,6 @@
 import pytest
+from app import db
+from app.modules.conftest import login, logout
 from unittest.mock import patch, MagicMock
 from app.modules.dataset.services import DataSetService
 from app.modules.dataset.models import DatasetRating
@@ -7,6 +9,20 @@ from app.modules.dataset.models import DatasetRating
 @pytest.fixture
 def dataset_service():
     return DataSetService()
+
+
+def test_view_profile_with_login(test_client):
+
+    login_response = login(test_client, "user@example.com", "test1234")
+    assert login_response.status_code == 200, "Login was unsuccessful."
+
+    response = test_client.get("/profile/2")
+    assert response.status_code == 200, "The profile page could not be accessed."
+
+
+def test_view_profile_without_login(test_client):
+    response = test_client.get("/profile/2")
+    assert response.status_code == 200, "The profile page could not be accessed."
 
 
 def test_rate_dataset_valid_rating(dataset_service):
