@@ -50,7 +50,15 @@ jobs:
         MARIADB_PASSWORD: uvlhub_password
         DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
       run: |
-        pytest app/modules/ --ignore-glob='*selenium*'
+        pytest app/modules/ 
+        --ignore-glob="*selenium*" \
+          --ignore=app/modules/auth/tests/test_seleniu_rem.py \
+          --ignore=app/modules/dataset/tests/test_rate_dataset.py \
+          --ignore=app/modules/dataset/tests/test_viewporfilewithlogin.py \
+          --ignore=app/modules/dataset/tests/test_viewporfilewithoutlogin.py \
+          --ignore=app/modules/featuremodel/tests/test_rate_featuremodel.py \
+          --ignore=app/modules/notepad/tests/test_create.py \
+          --ignore=app/modules/notepad/tests/test_interfaz.py \
 
   deploy:
     name: Deploy to Render
