@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - hotfix/#72-workflows-integration
 
 jobs:
   security-scan:
