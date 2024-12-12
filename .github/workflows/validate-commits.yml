@@ -2,8 +2,6 @@ name: Validate Commit Messages
 
 on:
   push:
-    branches:
-      - '**'
     branches-ignore:
       - main
 
