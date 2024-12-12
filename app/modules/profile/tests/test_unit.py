@@ -40,10 +40,12 @@ def test_edit_profile_page_get(test_client):
 
     logout(test_client)
 
+
 @pytest.fixture
 def auth_service(test_app):
     with test_app.app_context():
         return AuthenticationService()
+
 
 def test_generate_password_reset_token(auth_service):
     token = auth_service.generate_password_reset_token("user@example.com")
