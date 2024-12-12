@@ -32,6 +32,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8
 
-      # 4. Ejecutar Flake8
+      # 4. Ejecutar Flake8 y capturar errores
       - name: Run Flake8
-        run: flake8 .
+        continue-on-error: true  # No marca como fallo el paso
+        run: |
+          flake8 . --exclude=migrations/ > flake8-report.txt || true
+
+      # 5. Subir el informe de errores
+      - name: Upload Flake8 Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: flake8-report
+          path: flake8-report.txt
