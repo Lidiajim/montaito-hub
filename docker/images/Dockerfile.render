@@ -46,6 +46,9 @@ RUN pip install --no-cache-dir --upgrade pip
 # Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
+# Set the Discord bot token as an environment variable
+ENV DISCORD_BOT_TOKEN=$DISCORD_BOT_TOKEN
+
 # Expose port 80
 EXPOSE 80
 
