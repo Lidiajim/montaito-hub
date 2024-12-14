@@ -89,6 +89,19 @@ chico sundermann">
                     </a>
                 </li>
 
+                <li class="sidebar-header">
+                    Discord
+                </li>
+
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="https://discord.gg/FzqFdTnC" target="_blank">
+                        <i class="align-middle" data-feather="user"></i> 
+                        <span class="align-middle">Únete a nuestro servidor</span>
+                    </a>
+                </li>
+                
+
                
                 {% if not current_user.is_anonymous %}
                 <li class="sidebar-item {{ 'active' if request.endpoint == 'dataset.create_dataset' else '' }}">
@@ -96,7 +109,20 @@ chico sundermann">
                         <i class="align-middle" data-feather="layout"></i> <span
                             class="align-middle">My Dashboard</span>
                     </a>
-                </li>            
+                </li>       
+                
+                
+                <li class="sidebar-header">
+                    Discord
+                </li>
+
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="https://discord.gg/FzqFdTnC" target="_blank">
+                        <i class="align-middle" data-feather="user"></i> 
+                        <span class="align-middle">Únete a nuestro servidor</span>
+                    </a>
+                </li>
                 {% endif %}
 
                 
