@@ -32,7 +32,7 @@ def test_to_splot_endpoint(test_client):
     """
     Test the /flamapy/to_splot/<int:file_id> endpoint.
     """
-    with patch('app.modules.hubfile.services.HubfileService.get_by_id') as mock_get__id:
+    with patch('app.modules.hubfile.services.HubfileService.get_by_id') as mock_get_by_id:
         mock_hubfile = MagicMock()
         mock_hubfile.get_path.return_value = '/mock/path/to/file.uvl'
         mock_hubfile.name = 'mock_file'
