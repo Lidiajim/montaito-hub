@@ -36,3 +36,21 @@ El presente documento tiene como objetivo ser un registro formal de las decision
 - Total de Tiempo Empleado en Reuniones Virtuales:
 
 ### Actas de Reuniones
+ACTA 2024-01
+
+(usar el formato año-identificador para poner número al acta. En dicho identificador se recomienda usar un número incremental. La primera reunión deberá tener los acuerdos tomados para el "acta fundacional" según lo que se refleja en el enunciado del proyecto)
+
+    Asistentes: A, B, C
+    Acuerdos tomados:
+        Acuerdo 2024-01-01: redacción del acuerdo
+        ..
+        Acuerdo 2024-01-NN: redacción del acuerdo
+ACTA 2024-02
+
+(usar el formato año-identificador para poner número al acta. En dicho identificador se recomienda usar un número incremental. La primera reunión deberá tener los acuerdos tomados para el "acta fundacional" según lo que se refleja en el enunciado del proyecto)
+
+    Asistentes: A, B, C
+    Acuerdos tomados:
+        Acuerdo 2024-01-01: redacción del acuerdo
+        ..
+        Acuerdo 2024-01-NN: redacción del acuerdo
