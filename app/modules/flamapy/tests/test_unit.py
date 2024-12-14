@@ -1,24 +1,79 @@
+from unittest.mock import MagicMock, patch
 import pytest
+from flask import url_for
 
 
 @pytest.fixture(scope='module')
-def test_client(test_client):
+def test_client():
     """
-    Extends the test_client fixture to add additional specific data for module testing.
+    Creates a Flask test client and ensures proper app context management.
     """
-    with test_client.application.app_context():
-        # Add HERE new elements to the database that you want to exist in the test context.
-        # DO NOT FORGET to use db.session.add(<element>) and db.session.commit() to save the data.
-        pass
+    from app import create_app  # Adjust this import if necessary
+    app = create_app()
+    app.config['SERVER_NAME'] = 'localhost'  # Set SERVER_NAME for tests
+    app.config['TESTING'] = True  # Enable testing mode
 
-    yield test_client
+    with app.app_context():
+        with app.test_client() as client:
+            yield client
 
 
-def test_sample_assertion(test_client):
+def test_valid_endpoint(test_client):
     """
-    Sample test to verify that the test framework and environment are working correctly.
-    It does not communicate with the Flask application; it only performs a simple assertion to
-    confirm that the tests in this module can be executed.
+    Test the /flamapy/valid/<int:file_id> endpoint.
     """
-    greeting = "Hello, World!"
-    assert greeting == "Hello, World!", "The greeting does not coincide with 'Hello, World!'"
+    response = test_client.get(url_for('flamapy.valid', file_id=1))
+    assert response.status_code == 200, "Unexpected status code"
+    assert response.json.get("success") is True
+    assert response.json.get("file_id") == 1
+    
+
+def test_to_splot_endpoint(test_client):
+    """
+    Test the /flamapy/to_splot/<int:file_id> endpoint.
+    """
+    with patch('app.modules.hubfile.services.HubfileService.get_by_id') as mock_get_by_id:
+        mock_hubfile = MagicMock()
+        mock_hubfile.get_path.return_value = '/mock/path/to/file.uvl'
+        mock_hubfile.name = 'mock_file'
+        mock_get_by_id.return_value = mock_hubfile
+
+        with patch(
+            'flamapy.metamodels.fm_metamodel.transformations.UVLReader.transform'
+        ) as mock_transform, patch(
+            'flamapy.metamodels.fm_metamodel.transformations.SPLOTWriter.transform'
+        ) as mock_writer:
+            mock_transform.return_value = MagicMock()
+            mock_writer.return_value = None
+
+            response = test_client.get(url_for('flamapy.to_splot', file_id=1))
+            assert response.status_code == 200, "Unexpected status code"
+            assert response.headers["Content-Disposition"].startswith("attachment")
+            assert response.headers["Content-Type"] in ["application/octet-stream", "text/plain; charset=utf-8"]
+
+
+def test_to_cnf_endpoint(test_client):
+    """
+    Test the /flamapy/to_cnf/<int:file_id> endpoint.
+    """
+    with patch('app.modules.hubfile.services.HubfileService.get_by_id') as mock_get_by_id:
+        mock_hubfile = MagicMock()
+        mock_hubfile.get_path.return_value = '/mock/path/to/file.uvl'
+        mock_hubfile.name = 'mock_file'
+        mock_get_by_id.return_value = mock_hubfile
+
+        with patch(
+            'flamapy.metamodels.fm_metamodel.transformations.UVLReader.transform'
+        ) as mock_transform, patch(
+            'flamapy.metamodels.pysat_metamodel.transformations.FmToPysat.transform'
+        ) as mock_pysat_transform, patch(
+            'flamapy.metamodels.pysat_metamodel.transformations.DimacsWriter.transform'
+        ) as mock_writer:
+            mock_transform.return_value = MagicMock()
+            mock_pysat_transform.return_value = MagicMock()
+            mock_writer.return_value = None
+
+            response = test_client.get(url_for('flamapy.to_cnf', file_id=1))
+            assert response.status_code == 200, "Unexpected status code"
+            assert response.headers["Content-Disposition"].startswith("attachment")
+            assert response.headers["Content-Type"] in ["application/octet-stream", "text/plain; charset=utf-8"]
