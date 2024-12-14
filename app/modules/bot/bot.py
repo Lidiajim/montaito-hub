@@ -23,7 +23,7 @@ async def hello(ctx):
 @bot.command(name="datasets")
 async def list_datasets(ctx):
     try:
-        response = requests.get(f"{API_BASE_URL}/api/v1/datasets/")
+        response = requests.get(f"{API_BASE_URL}/api/v1/datasets/", timeout=10)
         response.raise_for_status()
         data = response.json()
         if "items" in data and isinstance(data["items"], list):
@@ -47,7 +47,7 @@ async def list_datasets(ctx):
 @bot.command(name="dataset")
 async def dataset_details(ctx, dataset_id: int):
     try:
-        response = requests.get(f"{API_BASE_URL}/api/v1/datasets/{dataset_id}")
+        response = requests.get(f"{API_BASE_URL}/api/v1/datasets/{dataset_id}", timeout=10)
         response.raise_for_status()
         dataset = response.json()
         message = (
