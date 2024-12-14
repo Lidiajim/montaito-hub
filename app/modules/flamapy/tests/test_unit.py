@@ -50,3 +50,30 @@ def test_to_splot_endpoint(test_client):
             assert response.status_code == 200, "Unexpected status code"
             assert response.headers["Content-Disposition"].startswith("attachment")
             assert response.headers["Content-Type"] in ["application/octet-stream", "text/plain; charset=utf-8"]
+
+
+def test_to_cnf_endpoint(testclient):
+    """
+    Test the /flamapy/to_cnf/<int:file_id> endpoint.
+    """
+    with patch('app.modules.hubfile.services.HubfileService.get_by_id') as mock_get_by_id:
+        mock_hubfile = MagicMock()
+        mock_hubfile.get_path.return_value = '/mock/path/to/file.uvl'
+        mock_hubfile.name = 'mock_file'
+        mock_get_by_id.return_value = mock_hubfile
+
+        with patch(
+            'flamapy.metamodels.fm_metamodel.transformations.UVLReader.transform'
+        ) as mock_transform, patch(
+            'flamapy.metamodels.pysat_metamodel.transformations.FmToPysat.transform'
+        ) as mock_pysat_transform, patch(
+            'flamapy.metamodels.pysat_metamodel.transformations.DimacsWriter.transform'
+        ) as mock_writer:
+            mock_transform.return_value = MagicMock()
+            mock_pysat_transform.return_value = MagicMock()
+            mock_writer.return_value = None
+
+            response = test_client.get(url_for('flamapy.to_cnf', file_id=1))
+            assert response.status_code == 200, "Unexpected status code"
+            assert response.headers["Content-Disposition"].startswith("attachment")
+            assert response.headers["Content-Type"] in ["application/octet-stream", "text/plain; charset=utf-8"]
