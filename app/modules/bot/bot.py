@@ -100,7 +100,7 @@ async def dataset_details(ctx, dataset_id: int):
 async def search_datasets(ctx, *, query: str):
     try:
         # Solicitar todos los datasets
-        response = requests.get(f"{API_BASE_URL}datasets/")
+        response = requests.get(f"{API_BASE_URL}datasets/", timeout=10)
         response.raise_for_status()
 
         data = response.json()
