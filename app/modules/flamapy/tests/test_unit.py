@@ -52,7 +52,7 @@ def test_to_splot_endpoint(test_client):
             assert response.headers["Content-Type"] in ["application/octet-stream", "text/plain; charset=utf-8"]
 
 
-def test_to_cnf_endpoint(testclient):
+def test_to_cnf_endpoint(test_client):
     """
     Test the /flamapy/to_cnf/<int:file_id> endpoint.
     """
