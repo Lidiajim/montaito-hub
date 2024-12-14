@@ -1,6 +1,5 @@
 import discord
 import requests
-import os
 from discord.ext import commands
 
 # Token del bot (del Developer Portal)
@@ -8,6 +7,22 @@ intents = discord.Intents.default()
 intents.message_content = True  # Habilitar acceso al contenido de los mensajes
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+# Determinar la URL base dinámica (localhost o producción)
+def get_api_base_url():
+    local_url = "http://127.0.0.1:5000/api/v1/"
+    prod_url = "https://montaito-hub-h34c.onrender.com/api/v1/"
+    
+    try:
+        # Comprobar si el localhost está disponible
+        response = requests.get(f"{local_url}datasets/", timeout=10)
+        response.raise_for_status()
+        return local_url
+    except requests.exceptions.RequestException:
+        # Si falla, usar la URL de producción
+        return prod_url
+
+# Inicializar la URL base
+API_BASE_URL = get_api_base_url()
 
 # Evento de inicio
 @bot.event
@@ -22,7 +37,7 @@ async def hello(ctx):
 async def list_datasets(ctx):
     try:
         # Solicitar datos al endpoint de datasets
-        response = requests.get("http://127.0.0.1:5000/api/v1/datasets/")
+        response = requests.get(f"{API_BASE_URL}datasets/", timeout=10)
         response.raise_for_status()  # Lanza un error si la respuesta no es 200 OK
 
         # Parsear el JSON
@@ -58,7 +73,7 @@ async def list_datasets(ctx):
 async def dataset_details(ctx, dataset_id: int):
     try:
         # Solicitar datos del dataset por ID
-        response = requests.get(f"http://127.0.0.1:5000/api/v1/datasets/{dataset_id}")
+        response = requests.get(f"{API_BASE_URL}datasets/{dataset_id}", timeout=10)
         response.raise_for_status()
 
         dataset = response.json()
@@ -85,7 +100,7 @@ async def dataset_details(ctx, dataset_id: int):
 async def search_datasets(ctx, *, query: str):
     try:
         # Solicitar todos los datasets
-        response = requests.get("http://127.0.0.1:5000/api/v1/datasets/")
+        response = requests.get(f"{API_BASE_URL}datasets/", timeout=10)
         response.raise_for_status()
 
         data = response.json()
@@ -105,7 +120,6 @@ async def search_datasets(ctx, *, query: str):
         await ctx.send(f"Error al conectar con la API: {e}")
     except Exception as e:
         await ctx.send(f"Error inesperado: {e}")
-
 
 @bot.command(name="info")
 async def bot_info(ctx):
