@@ -9,7 +9,7 @@ def test_client():
     """
     from app import create_app  # Adjust this import if necessary
     app = create_app()
-    app.config['SERVER_NAME'] = ''  # Set SERVER_NAME for tests
+    app.config['SERVER_NAME'] = 'localhost'  # Set SERVER_NAME for tests
     app.config['TESTING'] = True  # Enable testing mode
 
     with app.app_context():
