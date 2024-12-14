@@ -14,7 +14,7 @@ def get_api_base_url():
     
     try:
         # Comprobar si el localhost está disponible
-        response = requests.get(f"{local_url}datasets/")
+        response = requests.get(f"{local_url}datasets/", timeout=10)
         response.raise_for_status()
         return local_url
     except requests.exceptions.RequestException:
@@ -37,7 +37,7 @@ async def hello(ctx):
 async def list_datasets(ctx):
     try:
         # Solicitar datos al endpoint de datasets
-        response = requests.get(f"{API_BASE_URL}datasets/")
+        response = requests.get(f"{API_BASE_URL}datasets/", timeout=10)
         response.raise_for_status()  # Lanza un error si la respuesta no es 200 OK
 
         # Parsear el JSON
@@ -73,7 +73,7 @@ async def list_datasets(ctx):
 async def dataset_details(ctx, dataset_id: int):
     try:
         # Solicitar datos del dataset por ID
-        response = requests.get(f"{API_BASE_URL}datasets/{dataset_id}")
+        response = requests.get(f"{API_BASE_URL}datasets/{dataset_id}", timeout=10)
         response.raise_for_status()
 
         dataset = response.json()
