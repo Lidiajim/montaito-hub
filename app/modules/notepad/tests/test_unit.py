@@ -19,6 +19,7 @@ def test_client(test_client):
 def notepad_service():
     return NotepadService()
 
+
 def test_get_all_by_user(notepad_service):
     with patch.object(notepad_service.repository, 'get_all_by_user') as mock_get_all:
         mock_notepads = [MagicMock(id=1), MagicMock(id=2)]
@@ -30,6 +31,7 @@ def test_get_all_by_user(notepad_service):
         assert result == mock_notepads
         assert len(result) == 2
         mock_get_all.assert_called_once_with(user_id)
+
 
 def test_create(notepad_service):
     with patch.object(notepad_service.repository, 'create') as mock_create:
@@ -46,6 +48,7 @@ def test_create(notepad_service):
         assert result.id == 1
         mock_create.assert_called_once_with(title=title, body=body, user_id=user_id)
 
+
 def test_update(notepad_service):
     with patch.object(notepad_service.repository, 'update') as mock_update:
         mock_notepad = MagicMock(id=1)
@@ -60,6 +63,7 @@ def test_update(notepad_service):
         assert result == mock_notepad
         mock_update.assert_called_once_with(notepad_id, title=title, body=body)
 
+
 def test_delete(notepad_service):
     with patch.object(notepad_service.repository, 'delete') as mock_delete:
         mock_delete.return_value = True
@@ -68,4 +72,73 @@ def test_delete(notepad_service):
         result = notepad_service.delete(notepad_id)
 
         assert result is True
+        mock_delete.assert_called_once_with(notepad_id)
+        
+        
+def test_get_by_id(notepad_service):
+    with patch.object(notepad_service.repository, 'get_by_id') as mock_get_by_id:
+        mock_notepad = MagicMock(id=1)
+        mock_get_by_id.return_value = mock_notepad
+
+        notepad_id = 1
+        result = notepad_service.get_by_id(notepad_id)
+
+        assert result == mock_notepad
+        mock_get_by_id.assert_called_once_with(notepad_id)
+
+
+def test_get_by_id_not_found(notepad_service):
+    with patch.object(notepad_service.repository, 'get_by_id') as mock_get_by_id:
+        mock_get_by_id.return_value = None
+
+        notepad_id = 999  # Un ID que no existe
+        result = notepad_service.get_by_id(notepad_id)
+
+        assert result is None
+        mock_get_by_id.assert_called_once_with(notepad_id)
+
+
+def test_get_by_id_invalid(notepad_service):
+    with patch.object(notepad_service.repository, 'get_by_id') as mock_get_by_id:
+        mock_get_by_id.side_effect = ValueError
+
+        notepad_id = 1
+        with pytest.raises(ValueError):
+            notepad_service.get_by_id(notepad_id)
+        mock_get_by_id.assert_called_once_with(notepad_id)
+        
+
+def test_create_invalid(notepad_service):
+    with patch.object(notepad_service.repository, 'create') as mock_create:
+        mock_create.side_effect = ValueError
+
+        title = 'Test Notepad'
+        body = 'Test Body'
+        user_id = 1
+
+        with pytest.raises(ValueError):
+            notepad_service.create(title=title, body=body, user_id=user_id)
+        mock_create.assert_called_once_with(title=title, body=body, user_id=user_id)
+        
+
+def test_update_invalid(notepad_service):
+    with patch.object(notepad_service.repository, 'update') as mock_update:
+        mock_update.side_effect = ValueError
+
+        notepad_id = 1
+        title = 'Updated Notepad'
+        body = 'Updated Body'
+
+        with pytest.raises(ValueError):
+            notepad_service.update(notepad_id, title=title, body=body)
+        mock_update.assert_called_once_with(notepad_id, title=title, body=body)
+     
+        
+def test_delete_invalid(notepad_service):
+    with patch.object(notepad_service.repository, 'delete') as mock_delete:
+        mock_delete.side_effect = ValueError
+
+        notepad_id = 1
+        with pytest.raises(ValueError):
+            notepad_service.delete(notepad_id)
         mock_delete.assert_called_once_with(notepad_id)
