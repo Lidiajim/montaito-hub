@@ -48,65 +48,93 @@ def format_dataset_response(dataset):
 
 @ai_bp.route('/chat', methods=['POST'])
 def chat():
+    try:
+        # Obtén el JSON del cuerpo de la solicitud
+        data = request.json
+        if not data:
+            return jsonify({"error": "No JSON payload received"}), 400
 
-    message = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['message']
-    response_text = request.json.get('message')['queryResult']['fulfillmentMessages'][0]['payload']['response_text']
-    print(response_text)
-    print(message)
-   
-    valor_inicial = response_text
-    
-    if response_text == 'dataset-numero':
-        response_text = dataset_service.count_synchronized_datasets()
-        
-    if response_text == 'feature-number':
-        response_text = feature_model_service.count_feature_models()
-        
-    if response_text == 'dataset-downloads':
-        total_dataset_downloads = dataset_service.total_dataset_downloads()
-        response_text = total_dataset_downloads if total_dataset_downloads > 0 else 0
-        
-    if response_text == 'feature-downloads':
-        total_feature_model_downloads = feature_model_service.total_feature_model_downloads()
-        response_text = total_feature_model_downloads if total_feature_model_downloads > 0 else 0
-        
-        
-    if response_text == 'dataset-views':
-        total_dataset_views = dataset_service.total_dataset_views()
-        response_text = total_dataset_views
-        
-    if response_text == 'feature-views':
-        total_feature_model_views = feature_model_service.total_feature_model_views()
-        response_text = total_feature_model_views
-        
-    if response_text == 'dataset-latest':
-        latest_datasets = dataset_service.latest_synchronized()
-        dataset_names = [str(dataset.id) for dataset in latest_datasets]  # Convertir a cadenas
-        response_text = dataset_names
+        # Navega por la estructura de forma segura
+        message_data = data.get('message', {})
+        query_result = message_data.get('queryResult', {})
+        fulfillment_messages = query_result.get('fulfillmentMessages', [])
 
-    if response_text == 'dataset-get':
-        dataset_id = message
-        dataset = dataset_service.get_by_id(dataset_id)
-        if dataset is None:
-            response_text = "no se encontró el dataset"
-        else:
-            dataset = dataset.to_dict()
-            response_text = format_dataset_response(dataset)
-    
-    if response_text == 'feature-get':
-        feature_model_id = message
-        feature_model = feature_model_service.get_by_id(feature_model_id)
-        if feature_model is None:
-            response_text = "no se encontró el feature"
-        else:
-            feature_model_dict = sqlalchemy_to_dict(feature_model)
-            response_text = format_feature_response(feature_model_dict)
+        # Verifica que fulfillmentMessages tenga al menos un elemento
+        if not fulfillment_messages or not isinstance(fulfillment_messages[0], dict):
+            return jsonify({"error": "'fulfillmentMessages' is empty or not a valid list"}), 400
 
-    if valor_inicial == response_text:
-        response_text = None
-        
-    return jsonify({"message": message,
-                    "response": response_text})
+        payload = fulfillment_messages[0].get('payload', {})
+        if not payload:
+            return jsonify({"error": "'payload' not found in 'fulfillmentMessages[0]'"}), 400
+
+        # Extrae 'message' y 'response_text' del payload
+        message = payload.get('message')
+        response_text = payload.get('response_text')
+
+        if not message or not response_text:
+            return jsonify({"error": "'message' or 'response_text' not found in 'payload'"}), 400
+
+        # Imprime los valores extraídos
+        print(response_text)
+        print(message)
+
+        # Procesamiento basado en el valor de response_text
+        valor_inicial = response_text
+
+        if response_text == 'dataset-numero':
+            response_text = dataset_service.count_synchronized_datasets()
+
+        elif response_text == 'feature-number':
+            response_text = feature_model_service.count_feature_models()
+
+        elif response_text == 'dataset-downloads':
+            total_dataset_downloads = dataset_service.total_dataset_downloads()
+            response_text = total_dataset_downloads if total_dataset_downloads > 0 else 0
+
+        elif response_text == 'feature-downloads':
+            total_feature_model_downloads = feature_model_service.total_feature_model_downloads()
+            response_text = total_feature_model_downloads if total_feature_model_downloads > 0 else 0
+
+        elif response_text == 'dataset-views':
+            total_dataset_views = dataset_service.total_dataset_views()
+            response_text = total_dataset_views
+
+        elif response_text == 'feature-views':
+            total_feature_model_views = feature_model_service.total_feature_model_views()
+            response_text = total_feature_model_views
+
+        elif response_text == 'dataset-latest':
+            latest_datasets = dataset_service.latest_synchronized()
+            dataset_names = [str(dataset.id) for dataset in latest_datasets]  # Convertir a cadenas
+            response_text = dataset_names
+
+        elif response_text == 'dataset-get':
+            dataset_id = message
+            dataset = dataset_service.get_by_id(dataset_id)
+            if dataset is None:
+                response_text = "no se encontró el dataset"
+            else:
+                dataset = dataset.to_dict()
+                response_text = format_dataset_response(dataset)
+
+        elif response_text == 'feature-get':
+            feature_model_id = message
+            feature_model = feature_model_service.get_by_id(feature_model_id)
+            if feature_model is None:
+                response_text = "no se encontró el feature"
+            else:
+                feature_model_dict = sqlalchemy_to_dict(feature_model)
+                response_text = format_feature_response(feature_model_dict)
+
+        # Si response_text no cambió, lo marcamos como None
+        if valor_inicial == response_text:
+            response_text = None
+
+        return jsonify({"message": message, "response": response_text})
+
+    except Exception as e:
+        # Captura cualquier otro error inesperado
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
 
 
 @ai_bp.route('/ai')
