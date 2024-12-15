@@ -62,9 +62,7 @@ Los mensajes de commit deberán ser descriptivos y concisos, incluyendo informac
   - `test`: para cuando se añadan tests.
   - `config`: para cuando se modifica la configuración del proyecto.
 - No usar puntos finales ni suspensivos al final del título.
-- El mensaje de commit no deberá contener ningún mensaje de espacios en blanco.
 - Ser corto y conciso en los títulos, para ello se establecen un máximo de 50 caracteres.
-- Uso de mayúsculas al inicio del título y por cada párrafo del cuerpo de commit.
 
 ## 5. Políticas de Ramas
 El proyecto tendrá tantas ramas como issues creadas, excepto para las issues de documentación o configuración. Cada rama estará dedicada al desarrollo de la tarea correspondiente a la issue asignada. Estas son algunas pautas clave a seguir en cuanto a las políticas de ramas:
@@ -76,7 +74,7 @@ El proyecto tendrá tantas ramas como issues creadas, excepto para las issues de
 - **Ramas de test (test branches):** Para cada nuevo test, se creará una rama a partir de `develop`, y al finalizar el trabajo, se realizará una fusión a `develop` mediante un pull request. Ejemplo de nombre de rama: `test/#50-test-mejora-login`.
 - **Ramas de mejoras (upgrade branches):** Para cada nueva mejora en una funcionalidad, se creará una rama a partir de `develop`, y al finalizar el trabajo, se realizará una fusión a `develop` mediante un pull request. Ejemplo de nombre de rama: `upgrade/#55-upgrade-mejora-login`.
 - **Ramas de corrección de errores (bugfix branches):** Cuando se identifiquen errores en el código, se crearán ramas específicas para su corrección. Estas ramas pueden derivarse de `main` (si es un error en producción) o de `develop` (si es un error en desarrollo). Ejemplo de nombre de rama: `bugfix/#53-correccion-buglogin`.
-- **Ramas de hotfix:** Si es necesario corregir un error crítico en producción, se creará una rama de hotfix directamente desde `main` y, una vez corregido, se fusionará tanto en `main` como en `develop`. Ejemplo de nombre de rama: `hotfix/#101-parche-seguridad`.
+- **Ramas de hotfix:** Si es necesario corregir un error crítico en producción o un fallo en uno de los workflows, se creará una rama de hotfix directamente desde `main` y, una vez corregido, se fusionará tanto en `main` como en `develop`. Ejemplo de nombre de rama: `hotfix/#101-parche-seguridad`.
 
 ## 6. Políticas de Issues
 Se creará una issue para cada WI, mejora, test, documento o problema que surja durante el proyecto. Con esto crearemos ramas independientes con el nombre de estas tareas, marcándola inicialmente como issues abiertas. A cada issue se le asignará una etiqueta o label que identificará el problema a abordar:
