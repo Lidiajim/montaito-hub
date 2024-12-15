@@ -21,14 +21,13 @@
 ##  Table of Contents
 
 - [ Overview](#-overview)
+- [ Project Documentation](#-project-documentation)
 - [ Project Structure](#-project-structure)
-  - [ Project Index](#-project-index)
 - [ Getting Started](#-getting-started)
   - [ Prerequisites](#-prerequisites)
   - [ Installation](#-installation)
   - [ Usage](#-usage)
   - [ Testing](#-testing)
-- [ Project Documentation](#-project-documentation)
 - [ Acknowledgments](#-acknowledgments)
 
 ---
