@@ -1,7 +1,9 @@
+version: '3.8'
+
 services:
   web:
     container_name: web_app_container
-    image: drorganvidez/uvlhub:dev
+    image: montaito-hub/uvlhub:dev
     env_file:
       - ../.env
     expose:
