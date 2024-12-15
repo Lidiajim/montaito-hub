@@ -62,7 +62,6 @@ There you may find our commmon working policy checking ``/docs/Acta fundacional.
     ├── .github/
     │   ├── workflows/
     │   └── ...
-    ├── CHANGELOG.md
     ├── README.md
     ├── app/
     │   ├── modules/
