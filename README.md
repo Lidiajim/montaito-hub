@@ -116,6 +116,7 @@ Install montaito-hub.git using one of the following methods:
 ❯ python -m venv .evn
 ❯ cp .env.docker.example .env
 ❯ source .env/bin/activate
+❯ echo 'DISCORD_BOT_TOKEN="your_token_here"' >> .env
 ```
 
 4. Install the project dependencies:
