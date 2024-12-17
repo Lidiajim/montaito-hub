@@ -203,8 +203,8 @@ El entorno fomenta el trabajo en equipo mediante el uso de herramientas colabora
 GitHub: Para la gestión de issues, pull requests y revisión de código.
 Zenodo: Para la integración con Flamapy y el repositorio de modelos en UVL.
 ## Ejercicio de Propuesta de Cambio
-Durante la sesión de defensa el equipo de montaito-hub procederá a cambiar la imagen asociada al boton de la IA. Para ello deberá seguir los siguientes pasos:
-1. Se creará una issue relacionada a la propuesta de cambio, por ejemplo, Update IA button image.
+Durante la sesión de defensa el equipo de montaito-hub procederá a cambiar el icono asociado al boton del ranking de datasets. Para ello deberá seguir los siguientes pasos:
+1. Se creará una issue relacionada a la propuesta de cambio, por ejemplo, Update Ranking Icon.
 2. Se seguirá la plantilla definida en Articles of Incorporation para la issue y se asignará a los implicados en el cambio.
 3. Se creará una rama asociada a la issue desde develop siguiendo la política definida en Articles of Incorporation.
 4. Se hará git fetch para que aparezca la nueva rama creada.
